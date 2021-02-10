@@ -1,4 +1,4 @@
-**Nombre de la Aplicacion: (Compañia de Viajes)**
+#Nombre de la Aplicacion: (Compañia de Viajes)#
 
 **Tematica: Publica: Consultar precios de viajes, hotel, ocio. Las fechas disponibles, comparar precios. Privada: imprimir recibos, efectuar reservar, modificar datos usuario o reserva.**
 
