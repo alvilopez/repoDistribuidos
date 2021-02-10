@@ -12,6 +12,7 @@
    
    ###          Servicio Interno: Imprimir billetes, Contrato de un hotel, billetes Ocio. El usuario recibe un correo con el tipo de servicio (Confirmacion, recordatorio). Recibir un correo cuando se modifican los datos del usuario. Correo de confirmacion de alta. 
    
-   #### Equipo de Desarrollo: Pablo Martin Sanchez, p.martins.2017@alumnos.urjc.es, Hubalius2. 
+   #### Equipo de Desarrollo: Pablo Martin Sanchez, p.martins.2017@alumnos.urjc.es, Hubalius2.
+   ####                       Álvaro López Marcos, a.lopezmarc.2020@alumnos.urjc.es, alvilopez.
             
 
