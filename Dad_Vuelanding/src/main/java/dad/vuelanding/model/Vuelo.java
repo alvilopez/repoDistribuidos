@@ -1,10 +1,28 @@
 package dad.vuelanding.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Vuelo {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     private Aeropuerto aeropouertoSalida;
     private Aeropuerto aeropuertoLlegada;
     private java.sql.Date fechaSalida;
     private java.sql.Date fechaLlegada;
+
+    @OneToOne
+    private Aeropuerto arepuertoSalida;
+
+    @OneToOne
+    private Aeropuerto arepuertoLlegada;
 
 
     public Vuelo() {
