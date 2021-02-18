@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-DadVuelandingApplication<Dad_Vuelanding>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "dad.vuelanding.DadVuelandingApplication",
+            "projectName": "Dad_Vuelanding",
+            "args": ""
+        }
+    ]
+}

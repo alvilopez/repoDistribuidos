@@ -1,5 +1,15 @@
 package dad.vuelanding.reposotories;
 
-public class usuarioRepository {
+import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+import dad.vuelanding.model.Usuario;
+
+public interface usuarioRepository extends JpaRepository<Usuario, Long> {
+
+    Usuario FindByNif(String nif);
+    List<Usuario> findAllByOrderByNifAsc();
+    
 }
