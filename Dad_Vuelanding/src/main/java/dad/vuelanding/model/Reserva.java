@@ -1,20 +1,43 @@
 package dad.vuelanding.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Reserva {
 	
-	/*private Usuario cliente;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	
+	private Usuario cliente;
+	
+	@OneToOne
 	private Vuelo ida;
+	@OneToOne
 	private Vuelo vuelta;
+	@OneToOne
 	private Hotel hotel;
 	
 	
-	public reserva(Usuario cliente, Vuelo ida, Vuelo vuelta, Hotel hotel) {
+	public Reserva(Usuario cliente, Vuelo ida, Vuelo vuelta, Hotel hotel) {
 		this.cliente = cliente;
 		this.ida = ida;
 		this.vuelta = vuelta;
 		this.hotel = hotel;
 	}
-	
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public Usuario getCliente() {
 		return cliente;
 	}
@@ -38,7 +61,7 @@ public class Reserva {
 	}
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
-	}*/
+	}
 	
 	
 }

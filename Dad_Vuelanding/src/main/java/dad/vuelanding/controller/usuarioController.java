@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import dad.vuelanding.model.Usuario;
 
+
 @Controller
 public class usuarioController {
 	
 	
 	@GetMapping("/usuario")
 	public String usuario(){
-		return "usuario.mustache";
+		return "usuario";
 	}
 	
 	@PostMapping("/usuario/nuevo")
@@ -22,7 +23,11 @@ public class usuarioController {
 		return "usuario.mustache";
 	}
 	
-	
-	
+	@GetMapping("/saluda")
+	public String saluda(Model model) {
+		model.addAttribute("nombre","Spring application");
+		System.out.println("Hola");
+		return "helloWorld.mustache";
+	}
 	
 }

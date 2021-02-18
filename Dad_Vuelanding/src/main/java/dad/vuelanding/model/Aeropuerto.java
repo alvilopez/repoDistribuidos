@@ -1,6 +1,17 @@
 package dad.vuelanding.model;
 
+import javax.annotation.Generated;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Aeropuerto {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
     private String ciudad;
     private String codigo;
     private String nombre;
@@ -15,8 +26,16 @@ public class Aeropuerto {
         this.codigo = codigo;
         this.nombre = nombre;
     }
+    
+    public long getId() {
+		return id;
+	}
 
-    public String getCiudad() {
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getCiudad() {
         return this.ciudad;
     }
 
