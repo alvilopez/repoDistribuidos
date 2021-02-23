@@ -71,12 +71,11 @@ public class usuarioController {
 		return "usuario/nuevoUsuario";
 	}
 	
-	@PostMapping("/crearUsuario")
+	@PostMapping("usuario/crearUsuario")
 	public String crearUsuario(Model model, Usuario aux) {
 		System.out.println(aux.getName());
-
 		usuarioRepository.save(aux);
-		return "usuario/ConfirmacionUsuario";
+		return "Usuario/confirmacionRegistro";
 	}
 	
 }
