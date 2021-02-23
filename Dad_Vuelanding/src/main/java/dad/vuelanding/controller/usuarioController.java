@@ -71,7 +71,7 @@ public class usuarioController {
 		return "usuario/nuevoUsuario";
 	}
 	
-	@PostMapping("/usuario/crearUsuario")
+	@PostMapping("crearUsuario")
 	public String crearUsuario(Model model, Usuario aux) {
 		System.out.println(aux.getName());
 		return "usuario/ConfirmacionUsuario";
