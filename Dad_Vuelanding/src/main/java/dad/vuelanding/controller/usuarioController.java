@@ -42,6 +42,16 @@ public class usuarioController {
 	public String usuario(){
 		return "usuario";
 	}
+
+	@GetMapping("/errorUsuario")
+	public String errorUsuario(){
+		return "errorUsuario";
+	}
+
+	@GetMapping("/confirmacionRegistro")
+	public String confirmacionRegistro(){
+		return "confirmacionRegistro";
+	}
 	
 	@PostMapping("/usuario/nuevo")
 	public String nuevoUsuario (Model model, Usuario aux) {
