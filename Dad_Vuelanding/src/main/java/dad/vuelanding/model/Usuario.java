@@ -1,5 +1,6 @@
 package dad.vuelanding.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -25,19 +26,22 @@ public class Usuario {
 	@OneToMany
 	private List<Reserva> reserva;
 	
+	public Usuario() {}
+	
 	public Usuario(String name, String surname) {
 		this.name = name;
 		this.surname = surname;
 	}
 
-	/*public Usuario(String name, String surname, int edad, String nif, String correo, String password) {
+	public Usuario(String name, String surname, int edad, String nif, String correo, String password) {
 		this.name = name;
 		this.surname = surname;
 		this.edad = edad;
 		this.nif = nif;
 		this.correo = correo;
 		this.password = password;
-	}*/
+		reserva = new ArrayList<>();
+	}
 
 	public String getName() {
 		return name;
