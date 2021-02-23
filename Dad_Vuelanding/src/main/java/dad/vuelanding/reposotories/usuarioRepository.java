@@ -9,7 +9,7 @@ import dad.vuelanding.model.Usuario;
 
 public interface usuarioRepository extends JpaRepository<Usuario, Long> {
 
-    Usuario FindByNif(String nif);
+    Usuario findByNif(String nif);
     List<Usuario> findAllByOrderByNifAsc();
     
 }

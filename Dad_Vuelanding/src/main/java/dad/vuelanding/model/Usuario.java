@@ -1,5 +1,7 @@
 package dad.vuelanding.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +23,7 @@ public class Usuario {
 	private String password;
 	
 	@OneToMany
-	private Reserva reserva;
+	private List<Reserva> reserva;
 	
 	public Usuario(String name, String surname) {
 		this.name = name;

@@ -13,16 +13,16 @@ public class Vuelo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private Aeropuerto aeropouertoSalida;
-    private Aeropuerto aeropuertoLlegada;
+    //private Aeropuerto aeropouertoSalida;
+    //private Aeropuerto aeropuertoLlegada;
     private java.sql.Date fechaSalida;
     private java.sql.Date fechaLlegada;
 
     @OneToOne
-    private Aeropuerto arepuertoSalida;
+    private Aeropuerto aeropouertoSalida;
 
     @OneToOne
-    private Aeropuerto arepuertoLlegada;
+    private Aeropuerto aeropuertoLlegada;
 
 
     public Vuelo() {

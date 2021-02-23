@@ -13,7 +13,7 @@ public class Reserva {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	private Usuario cliente;
+	private String cliente;
 	
 	@OneToOne
 	private Vuelo ida;
@@ -24,7 +24,7 @@ public class Reserva {
 	
 	
 	public Reserva(Usuario cliente, Vuelo ida, Vuelo vuelta, Hotel hotel) {
-		this.cliente = cliente;
+		//this.cliente = cliente;
 		this.ida = ida;
 		this.vuelta = vuelta;
 		this.hotel = hotel;
@@ -38,12 +38,12 @@ public class Reserva {
 		this.id = id;
 	}
 
-	public Usuario getCliente() {
+	/*public Usuario getCliente() {
 		return cliente;
 	}
 	public void setCliente(Usuario cliente) {
 		this.cliente = cliente;
-	}
+	}*/
 	public Vuelo getIda() {
 		return ida;
 	}
