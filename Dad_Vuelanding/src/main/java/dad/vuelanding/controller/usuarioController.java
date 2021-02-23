@@ -40,23 +40,23 @@ public class usuarioController {
 	
 	@GetMapping("/usuario")
 	public String usuario(){
-		return "usuario";
+		return "usuario/usuario";
 	}
 
 	@GetMapping("/errorUsuario")
 	public String errorUsuario(){
-		return "errorUsuario";
+		return "usuario/errorUsuario";
 	}
 
 	@GetMapping("/confirmacionRegistro")
 	public String confirmacionRegistro(){
-		return "confirmacionRegistro";
+		return "usuario/confirmacionRegistro";
 	}
 	
 	@PostMapping("/usuario/nuevo")
 	public String nuevoUsuario (Model model, Usuario aux) {
 		System.out.println(aux.getName());
-		return "usuario";
+		return "usuario/usuario";
 	}
 	
 	@GetMapping("/saluda")
@@ -68,14 +68,15 @@ public class usuarioController {
 	
 	@GetMapping("/nuevousuario")
 	public String nuevoUsuario(){
-		return "nuevoUsuario";
+		return "usuario/nuevoUsuario";
 	}
 	
-	@PostMapping("/usuario/crearUsuario")
+	@PostMapping("/crearUsuario")
 	public String crearUsuario(Model model, Usuario aux) {
 		System.out.println(aux.getName());
+
 		usuarioRepository.save(aux);
-		return "confirmacionRegistro";
+		return "usuario/ConfirmacionUsuario";
 	}
 	
 }
