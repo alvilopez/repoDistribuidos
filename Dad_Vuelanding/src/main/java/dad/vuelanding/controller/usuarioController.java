@@ -78,4 +78,17 @@ public class usuarioController {
 		return "Usuario/confirmacionRegistro";
 	}
 	
+	@PostMapping("usuario/login")
+	public String loginUsuario(Model model, Usuario aux){
+		Usuario test = usuarioRepository.findByName(aux.getName());
+		/*if (test==null){
+			return "usuario/errorUsuario";
+		}*/
+		if (test.getPassword()==aux.getPassword()){
+			return "usuario/inicioSesion";
+		}else{
+			return "usuario/errorUsuario";
+		}
+		
+	}
 }

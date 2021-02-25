@@ -27,10 +27,10 @@ public class Usuario {
 	private List<Reserva> reserva;
 	
 	public Usuario() {}
-	
-	public Usuario(String name, String surname) {
+
+	public Usuario(String name, String password){
 		this.name = name;
-		this.surname = surname;
+		this.password = password;
 	}
 
 	public Usuario(String name, String surname, int edad, String nif, String correo, String password) {
