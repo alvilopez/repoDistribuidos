@@ -8,8 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
-
+import dad.vuelanding.model.Aeropuerto;
 import dad.vuelanding.model.Usuario;
 import dad.vuelanding.reposotories.aeropuertoRepository;
 import dad.vuelanding.reposotories.hotelRepository;
@@ -30,11 +29,18 @@ public class usuarioController {
 	@Autowired
 	private vueloRepository usuarioRepository4;
 	@Autowired
-	private aeropuertoRepository usuarioRepository5;
+	private aeropuertoRepository aeropuertoRepository;
 	
 	@PostConstruct
 	public void Init() {
-		
+		Aeropuerto ap1 = new Aeropuerto("Madrid", "BAR", "Barajas");
+		Aeropuerto ap2 = new Aeropuerto("Barcelona", "PRT", "El Prat");
+		Aeropuerto ap3 = new Aeropuerto("Londres","LON","Londres Airport");
+		Aeropuerto ap4 = new Aeropuerto("Paris","FRP","France Port");
+		aeropuertoRepository.save(ap1);
+		aeropuertoRepository.save(ap2);
+		aeropuertoRepository.save(ap3);
+		aeropuertoRepository.save(ap4);
 	}
 	
 	
