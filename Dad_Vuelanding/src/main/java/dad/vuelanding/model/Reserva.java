@@ -22,12 +22,19 @@ public class Reserva {
 	@OneToOne
 	private Hotel hotel;
 	
+	public Reserva() {}
 	
 	public Reserva(Usuario cliente, Vuelo ida, Vuelo vuelta, Hotel hotel) {
 		//this.cliente = cliente;
 		this.ida = ida;
 		this.vuelta = vuelta;
 		this.hotel = hotel;
+	}
+
+	public Reserva(Vuelo ida, Vuelo vuelta) {
+		super();
+		this.ida = ida;
+		this.vuelta = vuelta;
 	}
 
 	public long getId() {

@@ -58,8 +58,12 @@ public class usuarioController {
 		
 		Vuelo vl1 = new Vuelo("ML1", ap1, ap3);
 		Vuelo vl2 = new Vuelo("ML2",ap1,ap3);
+		Vuelo vl3 = new Vuelo("LM3", ap3, ap1);
+		Vuelo vl4 = new Vuelo("LM4",ap3,ap1);
 		vueloRepository.save(vl1);
 		vueloRepository.save(vl2);
+		vueloRepository.save(vl3);
+		vueloRepository.save(vl4);
 		
 	}
 	
@@ -138,18 +142,44 @@ public class usuarioController {
 	@PostMapping("/buscarVuelo/ViajesEntreCiudades")
 	public String mostrarVuelosCiudades(String origen,String destino,Model model) {
 		System.out.println(origen+destino);
+		
 		if(ciudades.contains(origen)&&ciudades.contains(destino)) {
 			Aeropuerto aeropuertoOrigen = aeropuertoRepository.findByCiudad(origen);
 			ArrayList<Vuelo> auxArray = vueloRepository.findByAeropouertoSalida(aeropuertoOrigen);
-			
 			ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>();
 			for (Vuelo v : auxArray) {
 				if(v.getAeropuertoLlegada().getCiudad().equalsIgnoreCase(destino)) vuelos.add(v);
 			}
-			model.addAttribute(vuelos);
+			model.addAttribute("vuelos",vuelos);
+			return "/vuelanding/buscarVuelo_MostrarVuelos";
  		}
 		
-		return "/vuelanding/buscarVuelo_MostrarVuelos";
+		return "vuelanding/buscarVuelo";
+	}
+	
+	@PostMapping("/buscarVueloVuelta")
+	public String reservarVuelo(String codigo,Model model) {
+		if(vueloRepository.findByCodigo(codigo)!= null) {
+			Aeropuerto aeropuertoOrigen = vueloRepository.findByCodigo(codigo).getAeropuertoLlegada();
+			
+			ArrayList<Vuelo> auxArray = vueloRepository.findByAeropouertoSalida(aeropuertoOrigen);
+			System.out.println(auxArray.size());
+			ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>();
+			for (Vuelo v : auxArray) {
+				
+				if(v.getAeropuertoLlegada().getCiudad().equalsIgnoreCase(vueloRepository.findByCodigo(codigo).getAeropouertoSalida().getCiudad())) vuelos.add(v);
+			}
+			model.addAttribute("vuelos",vuelos);
+			return "/vuelanding/reservar";
+		}else {
+			return "/vuelanding/errorReservar";
+		}
+	}
+	
+	@GetMapping("/reservar")
+	public String reservar(String codigo,Model model) {
+		
+		return"/vuelading/reservaCorrecta";
 	}
 	//Fin Funciones Controlador Aplicacion
 }

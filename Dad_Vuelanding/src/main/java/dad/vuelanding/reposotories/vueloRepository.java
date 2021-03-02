@@ -13,4 +13,5 @@ public interface vueloRepository extends JpaRepository<Vuelo, Long> {
 
 	ArrayList<Vuelo> findByAeropouertoSalida(Aeropuerto origen);
     ArrayList<Vuelo> findByFechaSalida(Date fechaSalida);
+    Vuelo findByCodigo(String Codigo);
 }
