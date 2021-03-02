@@ -1,6 +1,7 @@
 package dad.vuelanding.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.annotation.PostConstruct;
 
@@ -24,6 +25,7 @@ import dad.vuelanding.reposotories.vueloRepository;
 public class usuarioController {
 	
 	private Usuario usuarioActual = new Usuario();
+	private HashSet<String> ciudades = new HashSet<String>();
 	
 	@Autowired
 	private usuarioRepository usuarioRepository;
@@ -46,6 +48,10 @@ public class usuarioController {
 		aeropuertoRepository.save(ap2);
 		aeropuertoRepository.save(ap3);
 		aeropuertoRepository.save(ap4);
+		ciudades.add("Madrid");
+		ciudades.add("Barcelona");
+		ciudades.add("Londres");
+		ciudades.add("Paris");
 		
 		Usuario us1 = new Usuario("Pablo", "1234");
 		usuarioRepository.save(us1);
@@ -57,7 +63,7 @@ public class usuarioController {
 		
 	}
 	
-	
+	//Inicion Funciones Controlador Iniciar Sesion
 	@GetMapping("/usuario")
 	public String usuario(){
 		return "usuario/usuario";
@@ -112,7 +118,9 @@ public class usuarioController {
 			return "usuario/errorUsuario";
 		}
 	}
+	//Fin Funciones Controlador Inicar Sesion
 	
+	//Inicio Funciones Controlador Aplicacion
 	@GetMapping("/pagina")
 	public String iniciarAplicacion(){
 		return "vuelanding/pagina";
@@ -128,10 +136,20 @@ public class usuarioController {
 	}
 	
 	@PostMapping("/buscarVuelo/ViajesEntreCiudades")
-	public String mostrarVuelosCiudades(String origen,String destino) {
+	public String mostrarVuelosCiudades(String origen,String destino,Model model) {
 		System.out.println(origen+destino);
-		Aeropuerto aeropuerto = aeropuertoRepository.findByNombre(origen);
-		ArrayList<Vuelo> auxArray = vueloRepository.findByAeropouertoSalida(aeropuerto);
+		if(ciudades.contains(origen)&&ciudades.contains(destino)) {
+			Aeropuerto aeropuertoOrigen = aeropuertoRepository.findByCiudad(origen);
+			ArrayList<Vuelo> auxArray = vueloRepository.findByAeropouertoSalida(aeropuertoOrigen);
+			
+			ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>();
+			for (Vuelo v : auxArray) {
+				if(v.getAeropuertoLlegada().getCiudad().equalsIgnoreCase(destino)) vuelos.add(v);
+			}
+			model.addAttribute(vuelos);
+ 		}
+		
 		return "/vuelanding/buscarVuelo_MostrarVuelos";
 	}
+	//Fin Funciones Controlador Aplicacion
 }
