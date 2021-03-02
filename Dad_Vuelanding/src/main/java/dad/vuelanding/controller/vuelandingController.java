@@ -1,4 +1,4 @@
-package dad.vuelanding.controller;
+/*package dad.vuelanding.controller;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
+
 import dad.vuelanding.model.Aeropuerto;
+import dad.vuelanding.model.Vuelo;
 import dad.vuelanding.reposotories.aeropuertoRepository;
 import dad.vuelanding.reposotories.hotelRepository;
 import dad.vuelanding.reposotories.reservaRepository;
@@ -28,7 +31,7 @@ public class vuelandingController {
 	@Autowired
 	private reservaRepository usuarioRepository3;
 	@Autowired
-	private vueloRepository usuarioRepository4;
+	private vueloRepository vueloRepository;
 	@Autowired
 	private aeropuertoRepository aeropuertoRepository;
 	
@@ -49,7 +52,9 @@ public class vuelandingController {
 	@PostMapping("/buscarVuelo/ViajesEntreCiudades")
 	public String mostrarVuelosCiudades(String origen,String destino) {
 		System.out.println(origen+destino);
-		
+		Aeropuerto aeropuerto = aeropuertoRepository.findByNombre(origen);
+		ArrayList<Vuelo> auxArray = vueloRepository.findByAeropouertoSalida(aeropuerto);
 		return "/vuelanding/buscarVuelo_MostrarVuelos";
 	}
 }
+*/

@@ -12,7 +12,9 @@ public class Vuelo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
+    
+    private String codigo;
+    
     //private Aeropuerto aeropouertoSalida;
     //private Aeropuerto aeropuertoLlegada;
     private java.sql.Date fechaSalida;
@@ -27,12 +29,23 @@ public class Vuelo {
 
     public Vuelo() {
     }
+    
+    
+    
+    public Vuelo(String codigo, Aeropuerto aeropouertoSalida, Aeropuerto aeropuertoLlegada) {
+		this.codigo = codigo;
+		this.aeropouertoSalida = aeropouertoSalida;
+		this.aeropuertoLlegada = aeropuertoLlegada;
+	}
 
-    public Vuelo(Aeropuerto aeropouertoSalida, Aeropuerto aeropuertoLlegada, java.sql.Date fechaSalida, java.sql.Date fechaLlegada) {
+
+
+	public Vuelo(Aeropuerto aeropouertoSalida, Aeropuerto aeropuertoLlegada, java.sql.Date fechaSalida, java.sql.Date fechaLlegada,String codigo) {
         this.aeropouertoSalida = aeropouertoSalida;
         this.aeropuertoLlegada = aeropuertoLlegada;
         this.fechaSalida = fechaSalida;
         this.fechaLlegada = fechaLlegada;
+        this.codigo = codigo;
     }
 
     public Aeropuerto getAeropouertoSalida() {

@@ -1,5 +1,7 @@
 package dad.vuelanding.controller;
 
+import java.util.ArrayList;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import dad.vuelanding.model.Aeropuerto;
 import dad.vuelanding.model.Usuario;
+import dad.vuelanding.model.Vuelo;
 import dad.vuelanding.reposotories.aeropuertoRepository;
 import dad.vuelanding.reposotories.hotelRepository;
 import dad.vuelanding.reposotories.reservaRepository;
@@ -20,14 +23,16 @@ import dad.vuelanding.reposotories.vueloRepository;
 @Controller
 public class usuarioController {
 	
+	private Usuario usuarioActual = new Usuario();
+	
 	@Autowired
 	private usuarioRepository usuarioRepository;
 	@Autowired
-	private hotelRepository usuarioRepository2;
+	private hotelRepository hotelRepository;
 	@Autowired
-	private reservaRepository usuarioRepository3;
+	private reservaRepository reservaRepository;
 	@Autowired
-	private vueloRepository usuarioRepository4;
+	private vueloRepository vueloRepository;
 	@Autowired
 	private aeropuertoRepository aeropuertoRepository;
 	
@@ -41,6 +46,15 @@ public class usuarioController {
 		aeropuertoRepository.save(ap2);
 		aeropuertoRepository.save(ap3);
 		aeropuertoRepository.save(ap4);
+		
+		Usuario us1 = new Usuario("Pablo", "1234");
+		usuarioRepository.save(us1);
+		
+		Vuelo vl1 = new Vuelo("ML1", ap1, ap3);
+		Vuelo vl2 = new Vuelo("ML2",ap1,ap3);
+		vueloRepository.save(vl1);
+		vueloRepository.save(vl2);
+		
 	}
 	
 	
@@ -86,15 +100,38 @@ public class usuarioController {
 	
 	@PostMapping("usuario/login")
 	public String loginUsuario(Model model, Usuario aux){
-		Usuario test = usuarioRepository.findByName(aux.getName());
-		/*if (test==null){
-			return "usuario/errorUsuario";
-		}*/
-		if (test.getPassword()==aux.getPassword()){
-			return "usuario/inicioSesion";
-		}else{
+		if (aux==null){
 			return "usuario/errorUsuario";
 		}
 		
+		Usuario test = usuarioRepository.findByName(aux.getName());
+		if (test.getPassword().equals(aux.getPassword())){
+			usuarioActual = aux;
+			return "vuelanding/pagina";
+		}else{
+			return "usuario/errorUsuario";
+		}
+	}
+	
+	@GetMapping("/pagina")
+	public String iniciarAplicacion(){
+		return "vuelanding/pagina";
+	}
+	
+	@GetMapping("/buscarVuelo")
+	public String buscarVuelo(Model model){
+		ArrayList<Aeropuerto> aeropuertos = aeropuertoRepository.findAllByOrderByNombre();
+		System.out.println(aeropuertos.size());
+		model.addAttribute("aeropuertos",aeropuertos);
+		
+		return "vuelanding/buscarVuelo";
+	}
+	
+	@PostMapping("/buscarVuelo/ViajesEntreCiudades")
+	public String mostrarVuelosCiudades(String origen,String destino) {
+		System.out.println(origen+destino);
+		Aeropuerto aeropuerto = aeropuertoRepository.findByNombre(origen);
+		ArrayList<Vuelo> auxArray = vueloRepository.findByAeropouertoSalida(aeropuerto);
+		return "/vuelanding/buscarVuelo_MostrarVuelos";
 	}
 }
