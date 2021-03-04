@@ -1,16 +1,6 @@
 <html>
 	{{>footer}}
 	<body>
-		<p> Vuelos Disponibles: </p>
-		{{#vuelos}}
-			<li> Salida: {{aeropouertoSalida.ciudad}} Destino: {{aeropuertoLlegada.ciudad}} Codigo: {{codigo}} </li>
-		{{/vuelos}}
-		
-		<br>Introduce Codigo Viaje de Vuelta</br>
-		<form action="/reservar" method="post">
-		<p>Codigo del vuelo de Vuelta: </p>	
-		<input type='text' name='codigo'/>
-		<br><input type='submit' value='Reservar'/></br>
-		</form>
+		<br><h1>Su reserva ha sido realizada con exito</br></h1>
 	</body>
 </html>
