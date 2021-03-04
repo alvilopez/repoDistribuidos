@@ -141,7 +141,55 @@ public class usuarioController {
 		return "vuelanding/buscarVuelo";
 	}
 	
+	//-----------------------------------------------------------------------------------
 	@PostMapping("/buscarVuelo/ViajesEntreCiudades")
+	public String mostrarVuelosCiudades(String origen,String destino,Model viajesIdaModel, Model viajesVueltaModel ) {
+		System.out.println(origen+destino);
+		
+		if(ciudades.contains(origen)&&ciudades.contains(destino)) {
+			Aeropuerto aeropuertoOrigen = aeropuertoRepository.findByCiudad(origen);
+			ArrayList<Vuelo> auxArray = vueloRepository.findByAeropouertoSalida(aeropuertoOrigen);
+			ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>();
+			for (Vuelo v : auxArray) {
+				if(v.getAeropuertoLlegada().getCiudad().equalsIgnoreCase(destino)) vuelos.add(v);
+			}
+			System.out.println("Algo");
+			viajesIdaModel.addAttribute("vuelos",vuelos);
+			
+			
+			
+			Aeropuerto aeropuertoVuelta = aeropuertoRepository.findByCiudad(destino);
+			ArrayList<Vuelo> auxArray2 = vueloRepository.findByAeropouertoSalida(aeropuertoVuelta);
+			ArrayList<Vuelo> vuelos2 = new ArrayList<Vuelo>();
+			for (Vuelo v : auxArray2) {
+				if(v.getAeropuertoLlegada().getCiudad().equalsIgnoreCase(origen)) vuelos2.add(v);
+			}
+			System.out.println(vuelos2.size());
+			viajesVueltaModel.addAttribute("vuelos2",vuelos2);
+			
+			return "/vuelanding/buscarVueloAux";
+ 		}
+		
+		return "vuelanding/buscarVuelo";
+	}
+	
+	@PostMapping("/reservar")
+	public String reservar(String codigoIda,String codigoVuelta, Model model) {
+		if (vueloRepository.findByCodigo(codigoIda) != null && vueloRepository.findByCodigo(codigoVuelta)!= null) {
+			reservaActual.setIda(vueloRepository.findByCodigo(codigoIda));
+			reservaActual.setVuelta(vueloRepository.findByCodigo(codigoVuelta));
+			reservaActual.setUsuario(usuarioActual);
+			reservaRepository.save(reservaActual);
+			System.out.println(reservaActual.getUsuario());
+			return "/vuelanding/reservar";
+		} else {
+			return "/vuelanding/errorReservar";
+		}
+	}
+	
+	//-------------------------------------------------------------------------------------------------------------------
+	
+	/*@PostMapping("/buscarVuelo/ViajesEntreCiudades")
 	public String mostrarVuelosCiudades(String origen,String destino,Model model) {
 		System.out.println(origen+destino);
 		
@@ -165,6 +213,7 @@ public class usuarioController {
 		if(vueloRepository.findByCodigo(codigo)!= null) {
 			
 			reservaActual.setIda(vueloRepository.findByCodigo(codigo));
+			System.out.println(reservaActual.getIda().toString());
 			
 			Aeropuerto aeropuertoOrigen = vueloRepository.findByCodigo(codigo).getAeropuertoLlegada();
 			ArrayList<Vuelo> auxArray = vueloRepository.findByAeropouertoSalida(aeropuertoOrigen);
@@ -184,16 +233,16 @@ public class usuarioController {
 	@PostMapping("/reservar")
 	public String reservar(String codigo, Model model) {
 		if (vueloRepository.findByCodigo(codigo) != null) {
-
+	
 			reservaActual.setVuelta(vueloRepository.findByCodigo(codigo));
+			reservaActual.setUsuario(usuarioActual);
 			reservaRepository.save(reservaActual);
-			usuarioActual.anadirReserva(reservaActual);
-			System.out.println(usuarioActual.getReserva().size());
+			System.out.println(reservaActual.getUsuario());
 			return "/vuelanding/reservar";
 		} else {
 			return "/vuelanding/errorReservar";
 		}
-	}
+	}*/
 
 
 	@GetMapping("/informacionPersonal")

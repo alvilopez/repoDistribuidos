@@ -1,0 +1,23 @@
+<html>
+	{{>footer}}
+	<body>
+		<p> Vuelos Disponibles: </p>
+		{{#vuelos}}
+			<li> Salida: {{aeropouertoSalida.ciudad}} Destino: {{aeropuertoLlegada.ciudad}} Codigo: {{codigo}} </li>
+		{{/vuelos}}
+		<br>--------------------------------------------------------</br>
+		{{#vuelos2}}
+			<li> Salida: {{aeropouertoSalida.ciudad}} Destino: {{aeropuertoLlegada.ciudad}} Codigo: {{codigo}} </li>
+		{{/vuelos2}}
+		<br>--------------------------------------------------------</br>
+		
+		<br> Introducir Codigos Vuelos </br>
+		<form action="/reservar" method="post">
+		<p>Codigo del vuelo de Ida: </p>	
+		<input type='text' name='codigoIda'/>
+		<p>Codigo del vuelo de Vuelta: </p>	
+		<input type='text' name='codigoVuelta'/>
+		<br><input type='submit' value='Reservar'/></br>
+		</form>
+	</body>
+</html>

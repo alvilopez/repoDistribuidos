@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 @Entity
 public class Usuario {
 	
@@ -23,10 +25,11 @@ public class Usuario {
 	private String correo;
 	private String password;
 	
-	@OneToMany
-	private List<Reserva> reserva;
 	
-	public Usuario() {reserva = new ArrayList<>();}
+	/*@OneToMany
+	private List<Reserva> reserva;*/
+	
+	public Usuario() {/*reserva = new ArrayList<Reserva>();*/}
 
 	public Usuario(String name, String password){
 		this.name = name;
@@ -40,7 +43,7 @@ public class Usuario {
 		this.nif = nif;
 		this.correo = correo;
 		this.password = password;
-		reserva = new ArrayList<>();
+		//reserva = new ArrayList<>();
 	}
 
 	public String getName() {
@@ -91,7 +94,7 @@ public class Usuario {
 		this.password = password;
 	}
 	
-	public List<Reserva> getReserva() {
+	/*public List<Reserva> getReserva() {
 		return reserva;
 	}
 
@@ -101,5 +104,5 @@ public class Usuario {
 
 	public void anadirReserva(Reserva aux) {
 		reserva.add(aux);
-	}
+	}*/
 }

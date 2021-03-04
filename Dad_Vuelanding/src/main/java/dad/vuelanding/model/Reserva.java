@@ -1,9 +1,12 @@
 package dad.vuelanding.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -13,7 +16,7 @@ public class Reserva {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	private String cliente;
+	
 	
 	@OneToOne
 	private Vuelo ida;
@@ -21,6 +24,9 @@ public class Reserva {
 	private Vuelo vuelta;
 	@OneToOne
 	private Hotel hotel;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Usuario usuario;
 	
 	public Reserva() {}
 	
@@ -68,6 +74,14 @@ public class Reserva {
 	}
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 	
