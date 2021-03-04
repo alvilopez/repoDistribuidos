@@ -53,7 +53,7 @@ public class usuarioController {
 		ciudades.add("Londres");
 		ciudades.add("Paris");
 		
-		Usuario us1 = new Usuario("Pablo", "1234");
+		Usuario us1 = new Usuario("Alvi", "Lopez Marcos", 21, "00000000L", "a@gmail.com", "1234");
 		usuarioRepository.save(us1);
 		
 		Vuelo vl1 = new Vuelo("ML1", ap1, ap3);
@@ -116,7 +116,7 @@ public class usuarioController {
 		
 		Usuario test = usuarioRepository.findByName(aux.getName());
 		if (test.getPassword().equals(aux.getPassword())){
-			usuarioActual = aux;
+			usuarioActual = test;
 			return "vuelanding/pagina";
 		}else{
 			return "usuario/errorUsuario";
@@ -181,5 +181,12 @@ public class usuarioController {
 		
 		return"/vuelading/reservaCorrecta";
 	}
+
+	@GetMapping("/informacionPersonal")
+	public String informacionPersonal(Model model){
+		model.addAttribute("usuario", usuarioActual);
+		return "vuelanding/informacionPersonal";
+	}
+
 	//Fin Funciones Controlador Aplicacion
 }
