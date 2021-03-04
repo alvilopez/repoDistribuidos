@@ -26,7 +26,7 @@ public class Usuario {
 	@OneToMany
 	private List<Reserva> reserva;
 	
-	public Usuario() {}
+	public Usuario() {reserva = new ArrayList<>();}
 
 	public Usuario(String name, String password){
 		this.name = name;
@@ -91,5 +91,15 @@ public class Usuario {
 		this.password = password;
 	}
 	
-	public void anadirReserva() {}
+	public List<Reserva> getReserva() {
+		return reserva;
+	}
+
+	public void setReserva(List<Reserva> reserva) {
+		this.reserva = reserva;
+	}
+
+	public void anadirReserva(Reserva aux) {
+		reserva.add(aux);
+	}
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import dad.vuelanding.model.Aeropuerto;
+import dad.vuelanding.model.Reserva;
 import dad.vuelanding.model.Usuario;
 import dad.vuelanding.model.Vuelo;
 import dad.vuelanding.reposotories.aeropuertoRepository;
@@ -25,6 +26,7 @@ import dad.vuelanding.reposotories.vueloRepository;
 public class usuarioController {
 	
 	private Usuario usuarioActual = new Usuario();
+	private Reserva reservaActual = new Reserva();
 	private HashSet<String> ciudades = new HashSet<String>();
 	
 	@Autowired
@@ -150,8 +152,9 @@ public class usuarioController {
 			for (Vuelo v : auxArray) {
 				if(v.getAeropuertoLlegada().getCiudad().equalsIgnoreCase(destino)) vuelos.add(v);
 			}
+			System.out.println("Algo");
 			model.addAttribute("vuelos",vuelos);
-			return "/vuelanding/buscarVuelo_MostrarVuelos";
+			return "/vuelanding/buscarVuelo_VueloIda";
  		}
 		
 		return "vuelanding/buscarVuelo";
@@ -160,26 +163,36 @@ public class usuarioController {
 	@PostMapping("/buscarVueloVuelta")
 	public String reservarVuelo(String codigo,Model model) {
 		if(vueloRepository.findByCodigo(codigo)!= null) {
-			Aeropuerto aeropuertoOrigen = vueloRepository.findByCodigo(codigo).getAeropuertoLlegada();
 			
+			reservaActual.setIda(vueloRepository.findByCodigo(codigo));
+			
+			Aeropuerto aeropuertoOrigen = vueloRepository.findByCodigo(codigo).getAeropuertoLlegada();
 			ArrayList<Vuelo> auxArray = vueloRepository.findByAeropouertoSalida(aeropuertoOrigen);
 			System.out.println(auxArray.size());
 			ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>();
 			for (Vuelo v : auxArray) {
-				
 				if(v.getAeropuertoLlegada().getCiudad().equalsIgnoreCase(vueloRepository.findByCodigo(codigo).getAeropouertoSalida().getCiudad())) vuelos.add(v);
 			}
 			model.addAttribute("vuelos",vuelos);
-			return "/vuelanding/reservar";
+			System.out.println("Algo2");
+			return "/vuelanding/buscarVuelo_VueloVuelta";
 		}else {
 			return "/vuelanding/errorReservar";
 		}
 	}
-	
-	@GetMapping("/reservar")
-	public String reservar(String codigo,Model model) {
-		
-		return"/vuelading/reservaCorrecta";
+
+	@PostMapping("/reservar")
+	public String reservar(String codigo, Model model) {
+		if (vueloRepository.findByCodigo(codigo) != null) {
+
+			reservaActual.setVuelta(vueloRepository.findByCodigo(codigo));
+			reservaRepository.save(reservaActual);
+			usuarioActual.anadirReserva(reservaActual);
+			System.out.println(usuarioActual.getReserva().size());
+			return "/vuelanding/reservar";
+		} else {
+			return "/vuelanding/errorReservar";
+		}
 	}
-	//Fin Funciones Controlador Aplicacion
+	// Fin Funciones Controlador Aplicacion
 }
