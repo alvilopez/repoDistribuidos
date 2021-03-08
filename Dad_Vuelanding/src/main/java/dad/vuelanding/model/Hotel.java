@@ -1,5 +1,6 @@
 package dad.vuelanding.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,8 @@ public class Hotel {
 	@OneToOne
 	private Aeropuerto aeropuerto;
 
+	public Hotel () {}
+	
 	public Hotel(String name, int estrellas, Aeropuerto aeropuerto) {
 		this.name = name;
 		this.estrellas = estrellas;

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import dad.vuelanding.model.Aeropuerto;
+import dad.vuelanding.model.Hotel;
 import dad.vuelanding.model.Reserva;
 import dad.vuelanding.model.Usuario;
 import dad.vuelanding.model.Vuelo;
@@ -54,6 +55,16 @@ public class usuarioController {
 		ciudades.add("Barcelona");
 		ciudades.add("Londres");
 		ciudades.add("Paris");
+		
+		Hotel h1 = new Hotel("La bahia", 5, ap3);
+		Hotel h4 = new Hotel("London Hotel", 5, ap3);
+		Hotel h3 = new Hotel("Madrid Palace", 5, ap1);
+		Hotel h2 = new Hotel("El venao", 5, ap4);
+		hotelRepository.save(h1);
+		hotelRepository.save(h2);
+		hotelRepository.save(h3);
+		hotelRepository.save(h4);
+		
 		
 		Usuario us1 = new Usuario("Alvi", "Lopez Marcos", 21, "00000000L", "a@gmail.com", "1234");
 		usuarioRepository.save(us1);
@@ -170,17 +181,19 @@ public class usuarioController {
 			return "/vuelanding/buscarVueloAux";
  		}
 		
-		return "vuelanding/buscarVuelo";
+		return "vuelanding/errorReservar";
 	}
 	
 	@PostMapping("/reservar")
 	public String reservar(String codigoIda,String codigoVuelta, Model model) {
 		if (vueloRepository.findByCodigo(codigoIda) != null && vueloRepository.findByCodigo(codigoVuelta)!= null) {
-			reservaActual.setIda(vueloRepository.findByCodigo(codigoIda));
-			reservaActual.setVuelta(vueloRepository.findByCodigo(codigoVuelta));
-			reservaActual.setUsuario(usuarioActual);
-			reservaRepository.save(reservaActual);
-			System.out.println(reservaActual.getUsuario());
+			Reserva reservaAux = new Reserva();
+			reservaAux.setIda(vueloRepository.findByCodigo(codigoIda));
+			reservaAux.setVuelta(vueloRepository.findByCodigo(codigoVuelta));
+			Usuario aux = usuarioRepository.findByName(usuarioActual.getName());
+			reservaAux.setUsuario(aux);
+
+			reservaRepository.save(reservaAux);
 			return "/vuelanding/reservar";
 		} else {
 			return "/vuelanding/errorReservar";
@@ -188,9 +201,18 @@ public class usuarioController {
 	}
 	
 	//-------------------------------------------------------------------------------------------------------------------
+
+	//Funciones Viaje Mas Hotel
 	
-	/*@PostMapping("/buscarVuelo/ViajesEntreCiudades")
-	public String mostrarVuelosCiudades(String origen,String destino,Model model) {
+	@GetMapping("/buscarVueloHotel")
+	public String buscarVueloHotel(Model model){
+		ArrayList<Aeropuerto> aeropuertos = aeropuertoRepository.findAllByOrderByNombre();
+		model.addAttribute("aeropuertos",aeropuertos);
+		return "vuelanding/buscarVueloHotel";
+	}
+	
+	@PostMapping("/buscarVuelo/ViajesEntreCiudades/ViajeHotel")
+	public String mostrarVuelosCiudadesHotel(String origen,String destino,Model viajesIdaModel, Model viajesVueltaModel, Model hoteles ) {
 		System.out.println(origen+destino);
 		
 		if(ciudades.contains(origen)&&ciudades.contains(destino)) {
@@ -201,50 +223,50 @@ public class usuarioController {
 				if(v.getAeropuertoLlegada().getCiudad().equalsIgnoreCase(destino)) vuelos.add(v);
 			}
 			System.out.println("Algo");
-			model.addAttribute("vuelos",vuelos);
-			return "/vuelanding/buscarVuelo_VueloIda";
+			viajesIdaModel.addAttribute("vuelos",vuelos);
+			
+			Aeropuerto aeropuertoVuelta = aeropuertoRepository.findByCiudad(destino);
+			ArrayList<Vuelo> auxArray2 = vueloRepository.findByAeropouertoSalida(aeropuertoVuelta);
+			ArrayList<Vuelo> vuelos2 = new ArrayList<Vuelo>();
+			for (Vuelo v : auxArray2) {
+				if(v.getAeropuertoLlegada().getCiudad().equalsIgnoreCase(origen)) vuelos2.add(v);
+			}
+			System.out.println(vuelos2.size());
+			viajesVueltaModel.addAttribute("vuelos2",vuelos2);
+			
+			ArrayList<Hotel> hotelesL = new ArrayList<>();
+			hotelesL = hotelRepository.findByAeropuerto(aeropuertoVuelta);
+			hoteles.addAttribute("hoteles",hotelesL);
+			
+			return "/vuelanding/buscarVueloHotelAux";
  		}
 		
-		return "vuelanding/buscarVuelo";
+		return "vuelanding/errorReservar";
 	}
 	
-	@PostMapping("/buscarVueloVuelta")
-	public String reservarVuelo(String codigo,Model model) {
-		if(vueloRepository.findByCodigo(codigo)!= null) {
+	@PostMapping("/reservar/ViajeHotel")
+	public String reservarViajeMasHotel(String codigoIda,String codigoVuelta,String hotel, Model model) {
+		if (vueloRepository.findByCodigo(codigoIda) != null && vueloRepository.findByCodigo(codigoVuelta)!= null) {
+			reservaActual = new Reserva();
+			reservaActual.setIda(vueloRepository.findByCodigo(codigoIda));
+			reservaActual.setVuelta(vueloRepository.findByCodigo(codigoVuelta));
+			reservaActual.setHotel(hotelRepository.findByName(hotel));
+			Usuario aux = usuarioRepository.findByName(usuarioActual.getName());
+			reservaActual.setUsuario(aux);
 			
-			reservaActual.setIda(vueloRepository.findByCodigo(codigo));
-			System.out.println(reservaActual.getIda().toString());
-			
-			Aeropuerto aeropuertoOrigen = vueloRepository.findByCodigo(codigo).getAeropuertoLlegada();
-			ArrayList<Vuelo> auxArray = vueloRepository.findByAeropouertoSalida(aeropuertoOrigen);
-			System.out.println(auxArray.size());
-			ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>();
-			for (Vuelo v : auxArray) {
-				if(v.getAeropuertoLlegada().getCiudad().equalsIgnoreCase(vueloRepository.findByCodigo(codigo).getAeropouertoSalida().getCiudad())) vuelos.add(v);
-			}
-			model.addAttribute("vuelos",vuelos);
-			System.out.println("Algo2");
-			return "/vuelanding/buscarVuelo_VueloVuelta";
-		}else {
-			return "/vuelanding/errorReservar";
-		}
-	}
-
-	@PostMapping("/reservar")
-	public String reservar(String codigo, Model model) {
-		if (vueloRepository.findByCodigo(codigo) != null) {
-	
-			reservaActual.setVuelta(vueloRepository.findByCodigo(codigo));
-			reservaActual.setUsuario(usuarioActual);
 			reservaRepository.save(reservaActual);
 			System.out.println(reservaActual.getUsuario());
 			return "/vuelanding/reservar";
 		} else {
 			return "/vuelanding/errorReservar";
 		}
-	}*/
-
-
+	}
+	
+	
+	
+	
+	//Fin Funciones Viaje Mas Hotel
+	
 	@GetMapping("/informacionPersonal")
 	public String informacionPersonal(Model model){
 		model.addAttribute("usuario", usuarioActual);
