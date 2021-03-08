@@ -49,9 +49,9 @@
 ![ErrorReserva](https://user-images.githubusercontent.com/78815899/110353575-8356ea00-8037-11eb-8488-bb89aea11912.PNG)
 #### Plantilla muestra ha habido un error realizando una reserva.
 
-##Diagrama de Navegacion
+## Diagrama de Navegacion
 ![DiagramaNavegacion](https://user-images.githubusercontent.com/78815899/110356766-e1390100-803a-11eb-8a66-4b61e7a4d6e8.PNG)
-##Diagrama UML
+## Diagrama UML
 ![DiagrramaUML](https://user-images.githubusercontent.com/78815899/110356792-e6964b80-803a-11eb-80b8-15d48a7f7091.PNG)
 
 
