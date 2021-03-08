@@ -34,6 +34,9 @@
 ![VerPerfil](https://user-images.githubusercontent.com/78815899/110353274-278c6100-8037-11eb-9784-2efe03b60913.PNG)
 #### Plantilla que permite ver los detalles de un usuario.
 #### ------------------------------------------------------------------------------------------------------------------
+![MirarReservas](https://user-images.githubusercontent.com/78815899/110361769-c1a4d700-8040-11eb-8abb-07163350fcee.PNG)
+#### Plantilla permite ver las reservas
+#### ------------------------------------------------------------------------------------------------------------------
 ![BuscarVuelo](https://user-images.githubusercontent.com/78815899/110353323-383cd700-8037-11eb-974f-a7ff10f971bd.PNG)
 #### Plantilla que permite elegir las ciudades de origen y de destino.
 #### ------------------------------------------------------------------------------------------------------------------
