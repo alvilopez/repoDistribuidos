@@ -128,7 +128,7 @@ public class usuarioController {
 		}
 		
 		Usuario test = usuarioRepository.findByName(aux.getName());
-		if (test.getPassword().equals(aux.getPassword())){
+		if (test != null && test.getPassword().equals(aux.getPassword())){
 			usuarioActual = test;
 			return "vuelanding/pagina";
 		}else{
