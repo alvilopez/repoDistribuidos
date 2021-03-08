@@ -28,6 +28,7 @@ public class usuarioController {
 	
 	private Usuario usuarioActual = new Usuario();
 	private Reserva reservaActual = new Reserva();
+	private Hotel vacio = new Hotel("",0,null);
 	private HashSet<String> ciudades = new HashSet<String>();
 	
 	@Autowired
@@ -64,6 +65,7 @@ public class usuarioController {
 		hotelRepository.save(h2);
 		hotelRepository.save(h3);
 		hotelRepository.save(h4);
+		hotelRepository.save(vacio);
 		
 		
 		Usuario us1 = new Usuario("Alvi", "Lopez Marcos", 21, "00000000L", "a@gmail.com", "1234");
@@ -190,6 +192,8 @@ public class usuarioController {
 			Reserva reservaAux = new Reserva();
 			reservaAux.setIda(vueloRepository.findByCodigo(codigoIda));
 			reservaAux.setVuelta(vueloRepository.findByCodigo(codigoVuelta));
+			Hotel vacio = hotelRepository.findByName("");
+			reservaAux.setHotel(vacio);
 			Usuario aux = usuarioRepository.findByName(usuarioActual.getName());
 			reservaAux.setUsuario(aux);
 
@@ -276,9 +280,10 @@ public class usuarioController {
 	@GetMapping("/informacionReservas")
 	public String informacionReservas(Model model){
 		ArrayList<Reserva> reservas = new ArrayList<>();
-		reservas = (reservaRepository.findByUsuario(usuarioActual));
+		Usuario aux = usuarioRepository.findByName(usuarioActual.getName());
+		reservas = (reservaRepository.findByUsuario(aux));
 		model.addAttribute("reservas", reservas);
-		return "vuelanding/informacionReservas";
+		return "vuelanding/informacionReserva";
 	}
 
 	//Fin Funciones Controlador Aplicacion
