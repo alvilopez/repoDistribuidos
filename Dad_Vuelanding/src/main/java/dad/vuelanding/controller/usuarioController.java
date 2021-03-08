@@ -273,6 +273,14 @@ public class usuarioController {
 		return "vuelanding/informacionPersonal";
 	}
 
+	@GetMapping("/informacionReservas")
+	public String informacionReservas(Model model){
+		ArrayList<Reserva> reservas = new ArrayList<>();
+		reservas = (reservaRepository.findByUsuario(usuarioActual));
+		model.addAttribute("reservas", reservas);
+		return "vuelanding/informacionReservas";
+	}
+
 	//Fin Funciones Controlador Aplicacion
 
 	// Fin Funciones Controlador Aplicacion
