@@ -18,6 +18,8 @@
 ## Capturas de Pantalla Aplicacion:
 ![Usuario](https://user-images.githubusercontent.com/78815899/110352964-cfedf580-8036-11eb-970e-7fd883dc78ea.PNG)
 #### Plantilla que permite iniciar sesion o crear un nuevo usuario.
+
+
 ![CrearUsuario](https://user-images.githubusercontent.com/78815899/110353028-e2682f00-8036-11eb-8426-11bf1e558f2d.PNG)
 #### Plantilla que permite crear un usuario.
 ![UsuarioCreado](https://user-images.githubusercontent.com/78815899/110353077-f2800e80-8036-11eb-9448-6cc015c4343a.PNG)
