@@ -287,7 +287,25 @@ public class usuarioController {
 	}
 
 	//Fin Funciones Controlador Aplicacion
-
+	@GetMapping("/aeropuerto")
+	public String aeropuerto() {
+		return "aeropuertos/aeropuertos";
+	}
+	
+	@GetMapping("/aeropuerto/anadir")
+	public String aeropuertoDatos() {
+		return "aeropuertos/datosAeropuertos";
+	}
+	
+	@PostMapping("/aeropuerto/crear")
+	public String aeropuertoCrear(Aeropuerto aeropuertos) {
+		System.out.println(aeropuertos.getCiudad());
+		if(aeropuertos.getCiudad()=="" || aeropuertos.getCodigo()=="" || aeropuertos.getNombre() == "") {
+			return "errorDatos";
+		}
+		aeropuertoRepository.save(aeropuertos);
+		return "/aeropuertos/creado";
+	}
 	// Fin Funciones Controlador Aplicacion
 
 }
