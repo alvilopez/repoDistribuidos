@@ -1,0 +1,16 @@
+<html>
+	{{>footer}}
+	<body>
+		<p> Ciudades Disponibles: </p>
+		{{#aeropuertos}}
+			<li>{{ciudad}}</li>
+		{{/aeropuertos}}
+		
+		<br> Introduzca el nombre del aeropuerto a eliminar <br>
+		<form action="/aeropuerto/eliminar/datos" method="post">
+		<p>Nombre: </p>	
+		<input type='text' name='ciudad'/>
+		<br><input type='submit' value='Eliminar'/></br>
+		</form>
+	</body>
+</html>

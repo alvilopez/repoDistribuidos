@@ -287,6 +287,7 @@ public class usuarioController {
 	}
 
 	//Fin Funciones Controlador Aplicacion
+	//Funcoines añadir informacion a la base de datos
 	@GetMapping("/aeropuerto")
 	public String aeropuerto() {
 		return "aeropuertos/aeropuertos";
@@ -306,6 +307,27 @@ public class usuarioController {
 		aeropuertoRepository.save(aeropuertos);
 		return "/aeropuertos/creado";
 	}
-	// Fin Funciones Controlador Aplicacion
+	
+	@GetMapping("aeropuerto/eliminar")
+	public String aeropuertoEliminar(Model model) {
+		
+		model.addAttribute("aeropuertos", aeropuertoRepository.findAllByOrderByNombre());
+		return "aeropuertos/datosEliminarAeropuerto";
+	}
+	
+	@PostMapping("/aeropuerto/eliminar/datos")
+	public String aeropuertoEliminado(String ciudad) {
+		if(aeropuertoRepository.findByCiudad(ciudad)==null) {
+			return "errorDatos";
+		}
+		Aeropuerto  aux = aeropuertoRepository.findByCiudad(ciudad);
+		aeropuertoRepository.delete(aux);
+		return "aeropuertos/eliminado";
+	}
+	//Fin Funcoines añadir informacion a la base de datos
+	
+	
+	
+	
 
 }
