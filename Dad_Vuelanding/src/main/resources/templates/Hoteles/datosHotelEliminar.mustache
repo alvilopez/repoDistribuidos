@@ -1,0 +1,16 @@
+<html>
+	{{>footer}}
+	<body>
+		<p> Hoteles Disponibles: </p>
+		{{#hoteles}}
+			<li>{{name}}</li>
+		{{/hoteles}}
+		
+		<br> Introduzca el nombre del hotel a eliminar <br>
+		<form action="/hotel/eliminar/datos" method="post">
+		<p>Nombre: </p>	
+		<input type='text' name='name'/>
+		<br><input type='submit' value='Eliminar'/></br>
+		</form>
+	</body>
+</html>

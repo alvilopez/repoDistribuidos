@@ -1,0 +1,20 @@
+<html>
+	{{>footer}}
+	<body>
+		<p> Ciudades Disponibles: </p>
+		{{#aeropuertos}}
+			<li>{{ciudad}}</li>
+		{{/aeropuertos}}
+		
+		<br> Introducir Datos Hotel </br>
+		<form action="/hotel/crear" method="post">
+		<p>Nombre del Hotel: (La bahia)</p>	
+		<input type='text' name='name'/>
+		<p>Estrellas del hotel: (0-5)</p>	
+		<input type='text' name='estrellas'/>
+		<p>Nombre de la ciudad: </p>	
+		<input type='text' name='aeropuertoAux'/>
+		<br><input type='submit' value='Crear'/></br>
+		</form>
+	</body>
+</html>

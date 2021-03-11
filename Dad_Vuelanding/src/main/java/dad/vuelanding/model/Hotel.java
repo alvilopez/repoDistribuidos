@@ -14,17 +14,24 @@ public class Hotel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String name;
-	private int estrellas;
+	private String estrellas;
+	
+	private String aeropuertoAux;
 	
 	@OneToOne
 	private Aeropuerto aeropuerto;
 
 	public Hotel () {}
 	
-	public Hotel(String name, int estrellas, Aeropuerto aeropuerto) {
+	public Hotel(String name, String estrellas) {
 		this.name = name;
 		this.estrellas = estrellas;
-		this.aeropuerto = aeropuerto;
+	}
+	
+	public Hotel(String name, String estrellas, String aeropuertoAux) {
+		this.name = name;
+		this.estrellas = estrellas;
+		this.aeropuertoAux = aeropuertoAux;
 	}
 
 	public long getId() {
@@ -43,11 +50,11 @@ public class Hotel {
 		this.name = name;
 	}
 
-	public int getEstrellas() {
+	public String getEstrellas() {
 		return estrellas;
 	}
 
-	public void setEstrellas(int estrellas) {
+	public void setEstrellas(String estrellas) {
 		this.estrellas = estrellas;
 	}
 
@@ -57,6 +64,14 @@ public class Hotel {
 
 	public void setAeropuerto(Aeropuerto aeropuerto) {
 		this.aeropuerto = aeropuerto;
+	}
+
+	public String getAeropuertoAux() {
+		return aeropuertoAux;
+	}
+
+	public void setAeropuertoAux(String aeropuertoAux) {
+		this.aeropuertoAux = aeropuertoAux;
 	}
 	
 	

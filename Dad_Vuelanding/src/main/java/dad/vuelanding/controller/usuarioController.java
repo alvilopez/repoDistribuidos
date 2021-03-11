@@ -28,7 +28,7 @@ public class usuarioController {
 	
 	private Usuario usuarioActual = new Usuario();
 	private Reserva reservaActual = new Reserva();
-	private Hotel vacio = new Hotel("",0,null);
+	private Hotel vacio = new Hotel("","0");
 	private HashSet<String> ciudades = new HashSet<String>();
 	
 	@Autowired
@@ -57,10 +57,15 @@ public class usuarioController {
 		ciudades.add("Londres");
 		ciudades.add("Paris");
 		
-		Hotel h1 = new Hotel("La bahia", 5, ap3);
-		Hotel h4 = new Hotel("London Hotel", 5, ap3);
-		Hotel h3 = new Hotel("Madrid Palace", 5, ap1);
-		Hotel h2 = new Hotel("El venao", 5, ap4);
+		vacio.setAeropuerto(null);
+		Hotel h1 = new Hotel("La bahia", "5");
+		Hotel h4 = new Hotel("London Hotel", "5");
+		Hotel h3 = new Hotel("Madrid Palace", "5");
+		Hotel h2 = new Hotel("El venao", "5");
+		h1.setAeropuerto(ap1);
+		h2.setAeropuerto(ap2);
+		h3.setAeropuerto(ap3);
+		h4.setAeropuerto(ap4);
 		hotelRepository.save(h1);
 		hotelRepository.save(h2);
 		hotelRepository.save(h3);
@@ -288,6 +293,9 @@ public class usuarioController {
 
 	//Fin Funciones Controlador Aplicacion
 	//Funcoines añadir informacion a la base de datos
+	
+	//Aeropuertos
+	
 	@GetMapping("/aeropuerto")
 	public String aeropuerto() {
 		return "aeropuertos/aeropuertos";
@@ -323,6 +331,50 @@ public class usuarioController {
 		Aeropuerto  aux = aeropuertoRepository.findByCiudad(ciudad);
 		aeropuertoRepository.delete(aux);
 		return "aeropuertos/eliminado";
+	}
+	
+	//Hoteles
+	
+	@GetMapping("/hotel")
+	public String hotel() {
+		return "hoteles/hotel";
+	}
+	
+	@GetMapping("/hotel/anadir")
+	public String hotelDatos(Model model) {
+		ArrayList<Aeropuerto> auxL = aeropuertoRepository.findAllByOrderByNombre();
+		model.addAttribute("aeropuertos", auxL);
+		return "hoteles/datosHotel";
+	}
+	
+	@PostMapping("/hotel/crear")
+	public String hotelCrear(Hotel hotel) {
+		System.out.println(aeropuertoRepository.findByCiudad(hotel.getAeropuertoAux()).getCiudad());
+		if(hotel.getName()=="" || hotel.getEstrellas()=="" || aeropuertoRepository.findByCiudad(hotel.getAeropuertoAux())==null) {
+			return "errorDatos";
+		}
+		Aeropuerto auxAeropuerto2 = aeropuertoRepository.findByCiudad(hotel.getAeropuertoAux());
+		hotel.setAeropuerto(auxAeropuerto2);
+		hotelRepository.save(hotel);
+		return "/hoteles/creadoH";
+	}
+	
+	@GetMapping("hotel/eliminar")
+	public String hotelEliminar(Model model) {
+		
+		model.addAttribute("hoteles", hotelRepository.findAllByOrderByName());
+		return "hoteles/datosHotelEliminar";
+	}
+	
+	@PostMapping("/hotel/eliminar/datos")
+	public String hotelEliminado(String name) {
+		System.out.println(name);
+		if(hotelRepository.findByName(name)==null) {
+			return "errorDatos";
+		}
+		Hotel aux = hotelRepository.findByName(name);
+		hotelRepository.delete(aux);
+		return "hoteles/eliminadoH";
 	}
 	//Fin Funcoines añadir informacion a la base de datos
 	
