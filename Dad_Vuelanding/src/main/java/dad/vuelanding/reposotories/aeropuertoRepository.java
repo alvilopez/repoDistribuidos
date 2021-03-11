@@ -11,6 +11,7 @@ import dad.vuelanding.model.Usuario;
 public interface aeropuertoRepository extends JpaRepository<Aeropuerto,Long> {
 	
 	Aeropuerto findByCiudad(String nombre);
+	Aeropuerto findByNombre(String nombre);
 	ArrayList<Aeropuerto> findAllByOrderByNombre();
 	
 }

@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import javax.annotation.PostConstruct;
 
+import org.graalvm.compiler.lir.VirtualStackSlot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,7 +45,7 @@ public class usuarioController {
 	
 	@PostConstruct
 	public void Init() {
-		Aeropuerto ap1 = new Aeropuerto("Madrid", "BAR", "Barajas");
+		/*Aeropuerto ap1 = new Aeropuerto("Madrid", "BAR", "Barajas");
 		Aeropuerto ap2 = new Aeropuerto("Barcelona", "PRT", "El Prat");
 		Aeropuerto ap3 = new Aeropuerto("Londres","LON","Londres Airport");
 		Aeropuerto ap4 = new Aeropuerto("Paris","FRP","France Port");
@@ -79,7 +80,7 @@ public class usuarioController {
 		vueloRepository.save(vl2);
 		vueloRepository.save(vl3);
 		vueloRepository.save(vl4);
-		
+		*/
 	}
 	
 	//Inicion Funciones Controlador Iniciar Sesion
@@ -307,5 +308,39 @@ public class usuarioController {
 		return "/aeropuertos/creado";
 	}
 	// Fin Funciones Controlador Aplicacion
+
+	// Funciones control de vuelos
+	@GetMapping("/vuelo")
+	public String vuelo() {
+		return "vuelos/vuelos";
+	}
+
+	@GetMapping("/vuelo/anadir")
+	public String vueloDatos() {
+		return "vuelos/datosVuelos";
+	}
+	
+	@PostMapping("/vuelo/crear")
+	public String vueloCrear(String aeropuertoSalida, String aeropuertoLlegada, java.sql.Date fechaSalida, java.sql.Date fechaLlegada,String codigo) {
+
+		if(codigo=="" || fechaLlegada== null || fechaSalida == null || aeropuertoLlegada == "" || aeropuertoLlegada == "" ) {
+			return "errorDatos";
+		}
+		Aeropuerto llegada, salida;
+		
+		llegada = (aeropuertoRepository.findByNombre(aeropuertoSalida));
+		salida = (aeropuertoRepository.findByNombre(aeropuertoLlegada));
+
+		Vuelo vuelo = new Vuelo(salida,llegada,fechaSalida,fechaLlegada,codigo);
+
+		vueloRepository.save(vuelo);
+		
+		return "/vuelos/creado";
+	}
+
+
+
+
+
 
 }

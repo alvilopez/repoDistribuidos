@@ -14,6 +14,8 @@ public class Vuelo {
     private long id;
     
     private String codigo;
+
+    
     
     //private Aeropuerto aeropouertoSalida;
     //private Aeropuerto aeropuertoLlegada;
@@ -38,13 +40,21 @@ public class Vuelo {
 		this.aeropuertoLlegada = aeropuertoLlegada;
 	}
 
-
+    
 
 	public Vuelo(Aeropuerto aeropouertoSalida, Aeropuerto aeropuertoLlegada, java.sql.Date fechaSalida, java.sql.Date fechaLlegada,String codigo) {
         this.aeropouertoSalida = aeropouertoSalida;
         this.aeropuertoLlegada = aeropuertoLlegada;
         this.fechaSalida = fechaSalida;
         this.fechaLlegada = fechaLlegada;
+        this.codigo = codigo;
+    }
+
+    public String getCodigo() {
+        return this.codigo;
+    }
+
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
