@@ -53,10 +53,37 @@
 #### Plantilla muestra ha habido un error realizando una reserva.
 #### ------------------------------------------------------------------------------------------------------------------
 ![CrearAeropuerto](https://user-images.githubusercontent.com/34128078/111205943-152a9e00-85c8-11eb-8ca5-f383a2c0a1b4.PNG)
-#### Plantilla con formulario para la creacion de un objeto Aeropuerto.
+#### Plantilla con formulario para la creacion de un Aeropuerto.
 #### ------------------------------------------------------------------------------------------------------------------
 ![AeropuertoCreado](https://user-images.githubusercontent.com/34128078/111206261-718dbd80-85c8-11eb-8338-388295fcc02a.PNG)
-#### Plantilla con con la confirmacioón de que un Aeropuerto ha sido creado.
+#### Plantilla con con la confirmación de que un Aeropuerto ha sido creado.
+#### ------------------------------------------------------------------------------------------------------------------
+![EliminarAeropuerto](https://user-images.githubusercontent.com/34128078/111206260-718dbd80-85c8-11eb-8837-eb6373fb9d53.PNG)
+#### Plantilla para indicar que Aeropuerto se pretende eliminar.
+#### ------------------------------------------------------------------------------------------------------------------
+![AeropuertoEliminado](https://user-images.githubusercontent.com/34128078/111206257-70f52700-85c8-11eb-89e2-3eb9fd7698be.PNG)
+#### Plantilla para indicar que un Aeropuerto ha sido eliminado.
+#### ------------------------------------------------------------------------------------------------------------------
+![CrearHotelDeVerdad](https://user-images.githubusercontent.com/34128078/111206274-72beea80-85c8-11eb-941b-c06dadc2b806.PNG)
+#### Plantilla con formulario para la creacion de un Hotel.
+#### ------------------------------------------------------------------------------------------------------------------
+![HotelCreado](https://user-images.githubusercontent.com/34128078/111206269-72265400-85c8-11eb-9f63-76b2857418ab.PNG)
+#### Plantilla con con la confirmación de que un Hotel ha sido creado.
+#### ------------------------------------------------------------------------------------------------------------------
+![EliminarHotel](https://user-images.githubusercontent.com/34128078/111206265-72265400-85c8-11eb-920b-3004983dcd85.PNG)
+#### Plantilla para indicar que Hotel se pretende eliminar.
+#### ------------------------------------------------------------------------------------------------------------------
+![HotelEliminado](https://user-images.githubusercontent.com/34128078/111206275-72beea80-85c8-11eb-8cc4-21b33615b684.PNG)
+#### Plantilla para indicar que un Hotel ha sido eliminado.
+#### ------------------------------------------------------------------------------------------------------------------
+![CrearVuelo](https://user-images.githubusercontent.com/34128078/111206250-705c9080-85c8-11eb-9030-37954795efce.PNG)
+#### Plantilla con formulario para la creacion de un Vuelo.
+#### ------------------------------------------------------------------------------------------------------------------
+![VueloCreado](https://user-images.githubusercontent.com/34128078/111206255-70f52700-85c8-11eb-9a9e-49f384d82554.PNG)
+#### Plantilla con con la confirmación de que un Vuelo ha sido creado.
+#### ------------------------------------------------------------------------------------------------------------------
+![ErrorDatos](https://user-images.githubusercontent.com/34128078/111206271-72265400-85c8-11eb-818d-b427944c9816.PNG)
+#### Plantilla con con notificación de que los datos son erroneos.
 #### ------------------------------------------------------------------------------------------------------------------
 
 
