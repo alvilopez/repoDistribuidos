@@ -52,7 +52,7 @@
 ![ErrorReserva](https://user-images.githubusercontent.com/78815899/110353575-8356ea00-8037-11eb-8488-bb89aea11912.PNG)
 #### Plantilla muestra ha habido un error realizando una reserva.
 #### ------------------------------------------------------------------------------------------------------------------
-![Crear Aeropuertos](https://user-images.githubusercontent.com/alvilopez/Imagenes/blob/main/AeropuertoCreado.PNG)
+![Crear Aeropuertos](https://raw.githubusercontent.com/alvilopez/Imagenes/blob/main/CrearAeropuerto.PNG)
 #### Plantilla muestra ha habido un error realizando una reserva.
 #### ------------------------------------------------------------------------------------------------------------------
 
