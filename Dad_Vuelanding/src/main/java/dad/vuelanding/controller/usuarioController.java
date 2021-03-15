@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 import javax.annotation.PostConstruct;
 
-import org.graalvm.compiler.lir.VirtualStackSlot;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -314,6 +314,7 @@ public class usuarioController {
 			return "errorDatos";
 		}
 		aeropuertoRepository.save(aeropuertos);
+		ciudades.add(aeropuertos.getCiudad());
 		return "/aeropuertos/creado";
 	}
 	
@@ -329,7 +330,25 @@ public class usuarioController {
 		if(aeropuertoRepository.findByCiudad(ciudad)==null) {
 			return "errorDatos";
 		}
+		
 		Aeropuerto  aux = aeropuertoRepository.findByCiudad(ciudad);
+		
+		//Eliminar Vuelo Hoteles y reservas relacionadas con el aeropuerto
+		
+		ArrayList<Hotel> hotelesEliminar = hotelRepository.findByAeropuerto(aux);
+		ArrayList<Vuelo> vuelosEliminarIda = vueloRepository.findByAeropouertoSalida(aux); 
+		ArrayList<Vuelo> vuelosEliminarVuelta = vueloRepository.findByAeropuertoLlegada(aux);;
+		HashSet<Reserva> reservasEliminar = new HashSet<Reserva>();
+		for(Hotel h:hotelesEliminar) reservasEliminar.add(reservaRepository.findByHotel(h));
+		for(Vuelo v:vuelosEliminarIda) reservasEliminar.add(reservaRepository.findByIda(v));
+		for(Vuelo v:vuelosEliminarVuelta) reservasEliminar.add(reservaRepository.findByVuelta(v));
+		reservasEliminar.remove(null);
+		
+		if(!reservasEliminar.isEmpty())for(Reserva r:reservasEliminar)reservaRepository.delete(r);
+		if (!hotelesEliminar.isEmpty()) for(Hotel h:hotelesEliminar) hotelRepository.delete(h);
+		if (!vuelosEliminarIda.isEmpty()) for(Vuelo v:vuelosEliminarIda) vueloRepository.delete(v);
+		if (!vuelosEliminarVuelta.isEmpty()) for(Vuelo v:vuelosEliminarVuelta) vueloRepository.delete(v);
+		
 		aeropuertoRepository.delete(aux);
 		return "aeropuertos/eliminado";
 	}
@@ -374,6 +393,11 @@ public class usuarioController {
 			return "errorDatos";
 		}
 		Hotel aux = hotelRepository.findByName(name);
+		
+		ArrayList<Reserva> reservasEliminar =reservaRepository.findAllByHotel(aux);
+		reservasEliminar.remove(null);
+		if(!reservasEliminar.isEmpty())for(Reserva r:reservasEliminar)reservaRepository.delete(r);
+		
 		hotelRepository.delete(aux);
 		return "hoteles/eliminadoH";
 	}
@@ -395,26 +419,28 @@ public class usuarioController {
 	}
 	
 	@PostMapping("/vuelo/crear")
-	public String vueloCrear(String aeropuertoSalida, String aeropuertoLlegada, java.sql.Date fechaSalida, java.sql.Date fechaLlegada,String codigo) {
+	public String vueloCrear(String codigo, java.sql.Date fechaSalida, java.sql.Date fechaLlegada, String aeropuertoSalida, String aeropuertoLlegada) {
 
 		if(codigo=="" || fechaLlegada== null || fechaSalida == null || aeropuertoLlegada == "" || aeropuertoLlegada == "" ) {
+			if(aeropuertoRepository.findByCiudad(aeropuertoSalida)==null || aeropuertoRepository.findByCiudad(aeropuertoLlegada)==null) {
+				return "errorDatos";
+			}
 			return "errorDatos";
 		}
 		Aeropuerto llegada, salida;
 		
-		llegada = (aeropuertoRepository.findByNombre(aeropuertoSalida));
-		salida = (aeropuertoRepository.findByNombre(aeropuertoLlegada));
-
+		llegada = (aeropuertoRepository.findByCiudad(aeropuertoSalida));
+		salida = (aeropuertoRepository.findByCiudad(aeropuertoLlegada));
+		
+		System.out.println(aeropuertoLlegada);
+		System.out.println(aeropuertoSalida);
+		System.out.println(llegada.getCiudad());
+		System.out.println(salida.getCiudad());
 		Vuelo vuelo = new Vuelo(salida,llegada,fechaSalida,fechaLlegada,codigo);
 
 		vueloRepository.save(vuelo);
 		
 		return "/vuelos/creado";
 	}
-
-
-
-
-
 
 }
