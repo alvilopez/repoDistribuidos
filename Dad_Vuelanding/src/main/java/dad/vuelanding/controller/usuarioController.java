@@ -119,7 +119,7 @@ public class usuarioController {
 	
 	@GetMapping("/nuevousuario")
 	public String nuevoUsuario(){
-		return "usuario/nuevoUsuario";
+		return "usuario/nuevousuario";
 	}
 	
 	@PostMapping("usuario/crearUsuario")
@@ -131,6 +131,7 @@ public class usuarioController {
 	
 	@PostMapping("usuario/login")
 	public String loginUsuario(Model model, Usuario aux){
+		System.out.println("afasascascascasfascasasc");
 		if (aux==null){
 			return "usuario/errorUsuario";
 		}
