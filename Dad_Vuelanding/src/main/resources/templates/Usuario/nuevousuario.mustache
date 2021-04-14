@@ -3,7 +3,7 @@
 	
 		<h1> Introduce los campos</h1>
 		
-		<form action="usuario/crearUsuario" method="post">
+		<form action="/usuario/crearUsuario" method="post">
 		<p>Usuario: </p>	
 		<input type='text' name='name'/>
 		<p>Apellido:</p>
@@ -16,6 +16,7 @@
 		<input type='text' name='correo'/>
 		<p>Contraseña:</p>
 		<input type='text' name='password'/>
+		<input type="hidden" name="_csrf" value="{{token}}"/>
 		<input type='submit' value='Save'/>
 		
 	</form>

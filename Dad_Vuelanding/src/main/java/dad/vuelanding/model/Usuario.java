@@ -1,18 +1,26 @@
 package dad.vuelanding.model;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Entity
 public class Usuario {
+	
+
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +33,8 @@ public class Usuario {
 	private String correo;
 	private String password;
 	
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles;
 	
 	/*@OneToMany
 	private List<Reserva> reserva;*/
@@ -35,7 +45,15 @@ public class Usuario {
 		this.name = name;
 		this.password = password;
 	}
-
+	
+	public Usuario(String name, String password, String... roles) {
+		this.name = name;
+		this.password = password;
+		this.roles = List.of(roles);
+		//reserva = new ArrayList<>();
+	}
+	
+	
 	public Usuario(String name, String surname, int edad, String nif, String correo, String password) {
 		this.name = name;
 		this.surname = surname;
@@ -93,6 +111,22 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public void encodePassword() {
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		this.password = encoder.encode(this.password);
+		System.out.println(this.password);
+	}
+	
+	
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+	
 	
 	/*public List<Reserva> getReserva() {
 		return reserva;
