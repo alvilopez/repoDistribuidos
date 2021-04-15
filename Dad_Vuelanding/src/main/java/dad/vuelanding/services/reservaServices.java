@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 
 import dad.vuelanding.model.Hotel;
 import dad.vuelanding.model.Reserva;
@@ -15,7 +15,7 @@ import dad.vuelanding.model.Usuario;
 
 import dad.vuelanding.reposotories.reservaRepository;
 import dad.vuelanding.model.Reserva;
-
+@Service
 public class reservaServices {
 	
 	

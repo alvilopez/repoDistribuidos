@@ -5,13 +5,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import dad.vuelanding.model.Aeropuerto;
 import dad.vuelanding.model.Usuario;
 import dad.vuelanding.reposotories.aeropuertoRepository;
 import dad.vuelanding.reposotories.usuarioRepository;
 
-@Component
+@Service
 public class aeropuertoServices{
 	
 	@Autowired

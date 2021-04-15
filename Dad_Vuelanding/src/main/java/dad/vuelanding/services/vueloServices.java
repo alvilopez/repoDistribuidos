@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import dad.vuelanding.model.Aeropuerto;
 import dad.vuelanding.model.Vuelo;
 import dad.vuelanding.reposotories.vueloRepository;
-
+@Service
 public class vueloServices {
     @Autowired
 	private vueloRepository repository;
