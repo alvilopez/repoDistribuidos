@@ -1,16 +1,26 @@
 package dad.vuelanding.controller;
 
+import java.security.Principal;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 import javax.annotation.PostConstruct;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import dad.vuelanding.model.Aeropuerto;
 import dad.vuelanding.model.Hotel;
@@ -23,7 +33,7 @@ import dad.vuelanding.reposotories.reservaRepository;
 import dad.vuelanding.reposotories.usuarioRepository;
 import dad.vuelanding.reposotories.vueloRepository;
 
-
+@CrossOrigin
 @Controller
 public class usuarioController {
 	
@@ -42,6 +52,8 @@ public class usuarioController {
 	private vueloRepository vueloRepository;
 	@Autowired
 	private aeropuertoRepository aeropuertoRepository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@PostConstruct
 	public void Init() {
@@ -88,6 +100,32 @@ public class usuarioController {
 		*/
 	}
 	
+	@ModelAttribute
+	public void addAttributes(Model model, HttpServletRequest request) {
+
+		Principal principal = request.getUserPrincipal();
+
+		if(principal != null) {
+		
+			model.addAttribute("logged", true);		
+			model.addAttribute("userName", principal.getName());
+			model.addAttribute("admin", request.isUserInRole("ADMIN"));
+			
+		} else {
+			model.addAttribute("logged", false);
+		}
+	}
+	
+	
+	/*@RequestMapping("/usuario")
+	public String home(Model model, HttpServletRequest request) {
+
+	 model.addAttribute("admin", request.isUserInRole("ADMIN"));
+	 return "usuario/usuario";
+	}*/
+
+	 
+	
 	//Inicion Funciones Controlador Iniciar Sesion
 	@GetMapping("/usuario")
 	public String usuario(){
@@ -105,7 +143,7 @@ public class usuarioController {
 	}
 	
 	@PostMapping("/usuario/nuevo")
-	public String nuevoUsuario (Model model, Usuario aux) {
+	public String nuevoUsuario (Model model, Usuario aux, HttpServletRequest request) {
 		System.out.println(aux.getName());
 		return "usuario/usuario";
 	}
@@ -122,22 +160,26 @@ public class usuarioController {
 		return "usuario/nuevousuario";
 	}
 	
-	@PostMapping("usuario/crearUsuario")
+	@PostMapping("/usuario/crearUsuario")
 	public String crearUsuario(Model model, Usuario aux) {
 		System.out.println(aux.getName());
+		ArrayList<String> rolUsuario = new ArrayList<>();
+		rolUsuario.add("USER");
+		aux.setRoles(rolUsuario);
+		aux.encodePassword();
 		usuarioRepository.save(aux);
-		return "Usuario/confirmacionRegistro";
+		return "usuario/confirmacionRegistro";
 	}
 	
 	@PostMapping("usuario/login")
 	public String loginUsuario(Model model, Usuario aux){
-		System.out.println("afasascascascasfascasasc");
+		
 		if (aux==null){
 			return "usuario/errorUsuario";
 		}
-		
+	
 		Usuario test = usuarioRepository.findByName(aux.getName());
-		if (test != null && test.getPassword().equals(aux.getPassword())){
+		if (test != null && passwordEncoder.matches(aux.getPassword(),test.getPassword())){
 			usuarioActual = test;
 			return "vuelanding/pagina";
 		}else{
@@ -299,7 +341,16 @@ public class usuarioController {
 	//Aeropuertos
 	
 	@GetMapping("/aeropuerto")
-	public String aeropuerto() {
+	public String aeropuerto(HttpServletRequest request) {
+		System.out.println("HOLAOLAOALAOALAOAL");
+		/*String name = request.getUserPrincipal().getName();
+		
+		try {
+			Usuario user = usuarioRepository.findByName(name);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}*/
+		
 		return "aeropuertos/aeropuertos";
 	}
 	
@@ -415,7 +466,9 @@ public class usuarioController {
 	}
 
 	@GetMapping("/vuelo/anadir")
-	public String vueloDatos() {
+	public String vueloDatos(Model model) {
+		ArrayList<Aeropuerto> auxL = aeropuertoRepository.findAllByOrderByNombre();
+		model.addAttribute("aeropuertos", auxL);
 		return "vuelos/datosVuelos";
 	}
 	

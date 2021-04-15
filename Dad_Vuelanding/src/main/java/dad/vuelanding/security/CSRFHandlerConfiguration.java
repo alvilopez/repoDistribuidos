@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+<<<<<<< HEAD
 
 @Configuration
 public class CSRFHandlerConfiguration implements WebMvcConfigurer {
@@ -18,10 +19,20 @@ public class CSRFHandlerConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(new CSRFHandlerInterceptor());
     }
+=======
+@Configuration
+public class CSRFHandlerConfiguration implements WebMvcConfigurer {
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new CSRFHandlerInterceptor());
+	}
+>>>>>>> 01319605659c27c1e4dca806fcf329642b073503
 }
 
 class CSRFHandlerInterceptor implements HandlerInterceptor {
 
+<<<<<<< HEAD
     @Override
     public void postHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler,
     final ModelAndView modelAndView) throws Exception {
@@ -32,4 +43,18 @@ class CSRFHandlerInterceptor implements HandlerInterceptor {
             }
         }   
     }
+=======
+	@Override
+	public void postHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler,
+			final ModelAndView modelAndView) throws Exception {
+
+		if (modelAndView != null) {
+
+			CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+			if (token != null) {
+				modelAndView.addObject("token", token.getToken());
+			}
+		}
+	}
+>>>>>>> 01319605659c27c1e4dca806fcf329642b073503
 }
