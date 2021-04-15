@@ -1,6 +1,7 @@
 package dad.vuelanding.reposotories;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,4 +16,5 @@ public interface reservaRepository extends JpaRepository<Reserva, Long> {
 	Reserva findByIda(Vuelo aux);
 	Reserva findByVuelta(Vuelo aux);
 	ArrayList<Reserva> findAllByHotel(Hotel aux);
+	
 }
