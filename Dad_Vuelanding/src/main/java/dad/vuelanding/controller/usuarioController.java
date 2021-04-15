@@ -287,7 +287,7 @@ public class usuarioController {
 			}
 			System.out.println(vuelos2.size());
 			viajesVueltaModel.addAttribute("vuelos2",vuelos2);
-			
+	 		
 			ArrayList<Hotel> hotelesL = new ArrayList<>();
 			hotelesL = hotelRepository.findByAeropuerto(aeropuertoVuelta);
 			hoteles.addAttribute("hoteles",hotelesL);

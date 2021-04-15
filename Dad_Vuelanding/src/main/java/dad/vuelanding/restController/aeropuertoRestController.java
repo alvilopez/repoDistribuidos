@@ -1,6 +1,7 @@
 package dad.vuelanding.restController;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +19,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import dad.vuelanding.model.Aeropuerto;
+import dad.vuelanding.model.Hotel;
 import dad.vuelanding.model.Reserva;
 import dad.vuelanding.model.Usuario;
+import dad.vuelanding.model.Vuelo;
+import dad.vuelanding.reposotories.reservaRepository;
+import dad.vuelanding.reposotories.vueloRepository;
 import dad.vuelanding.services.aeropuertoServices;
 import dad.vuelanding.services.hotelServices;
 import dad.vuelanding.services.reservaServices;
@@ -41,6 +46,10 @@ public class aeropuertoRestController {
 	
 	@Autowired
 	private vueloServices servicesv;
+	
+	@Autowired
+	private reservaRepository reservaRepository;
+
 	
 	@GetMapping("/")
 	public List<Aeropuerto> getAeropuertos(){
@@ -85,11 +94,22 @@ public class aeropuertoRestController {
 	public ResponseEntity<Aeropuerto> deleteUser(@PathVariable long id) {
 		
 		if(service.exist(id)) {
-			Usuario auxUsuario = service.findById(id).get();
-			ArrayList<Reserva> reservaToDelete = serviceR.relatedWithUsuario(auxUsuario);
-			for(Reserva r : reservaToDelete){
-				serviceR.delete(r.getId());
-			}
+			Aeropuerto auxAeropuerto = service.findById(id).get();
+			ArrayList<Hotel> hotelesEliminar = serviceh.relatedWithAirport(auxAeropuerto);
+			ArrayList<Vuelo> vuelosEliminarIda = servicesv.relatedWithAirportDepart(auxAeropuerto);
+			ArrayList<Vuelo> vuelosEliminarVuelta = servicesv.relatedWithAirportArrival(auxAeropuerto);
+			HashSet<Reserva> reservasEliminar = new HashSet<Reserva>();
+			for(Hotel h:hotelesEliminar) reservasEliminar.add(reservaRepository.findByHotel(h));
+			for(Vuelo v:vuelosEliminarIda) reservasEliminar.add(reservaRepository.findByIda(v));
+			for(Vuelo v:vuelosEliminarVuelta) reservasEliminar.add(reservaRepository.findByVuelta(v));
+			reservasEliminar.remove(null);
+			
+			if(!reservasEliminar.isEmpty())for(Reserva r:reservasEliminar) serviceR.delete(r.getId());
+			if (!hotelesEliminar.isEmpty()) for(Hotel h:hotelesEliminar) serviceh.delete(h.getId());
+			if (!vuelosEliminarIda.isEmpty()) for(Vuelo v:vuelosEliminarIda) servicesv.delete(v.getId());
+			if (!vuelosEliminarVuelta.isEmpty()) for(Vuelo v:vuelosEliminarVuelta) servicesv.delete(v.getId());
+			
+			
 			service.delete(id);
 			return new ResponseEntity<>(null, HttpStatus.OK);
 		}else {

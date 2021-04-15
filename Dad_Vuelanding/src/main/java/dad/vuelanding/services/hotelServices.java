@@ -1,5 +1,6 @@
 package dad.vuelanding.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +36,7 @@ public class hotelServices {
 		hotelRespository.deleteById(id);
 	}	
 	
-	public List<Hotel> relatedWithAirport(Aeropuerto aer){
+	public ArrayList<Hotel> relatedWithAirport(Aeropuerto aer){
 		return hotelRespository.findByAeropuerto(aer);
 	}
 	

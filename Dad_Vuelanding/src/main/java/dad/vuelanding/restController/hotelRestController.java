@@ -77,11 +77,11 @@ public class hotelRestController {
 	public ResponseEntity<Usuario> deleteHotel(@PathVariable long id) {
 		
 		if(service.exist(id)) {
-			Hotel hotel = service.findById(id).get();
+			/*Hotel hotel = service.findById(id).get();
 			ArrayList<Reserva> reservaToDelete = serviceR.relatedWithHotel(hotel);
 			for(Reserva r : reservaToDelete){
 				serviceR.delete(r.getId());
-			}
+			}*/
 			service.delete(id);
 			return new ResponseEntity<>(null, HttpStatus.OK);
 		}else {

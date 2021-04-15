@@ -79,11 +79,11 @@ public class usuarioRestController {
 	public ResponseEntity<Usuario> deleteUser(@PathVariable long id) {
 		
 		if(service.exist(id)) {
-			Usuario auxUsuario = service.findById(id).get();
+			/*Usuario auxUsuario = service.findById(id).get();
 			ArrayList<Reserva> reservaToDelete = serviceR.relatedWithUsuario(auxUsuario);
 			for(Reserva r : reservaToDelete){
 				serviceR.delete(r.getId());
-			}
+			}*/
 			service.delete(id);
 			return new ResponseEntity<>(null, HttpStatus.OK);
 		}else {
