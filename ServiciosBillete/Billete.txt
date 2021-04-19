@@ -1,0 +1,26 @@
+USUARIO:
+Nombre: Pablo
+Apellido: Martin
+Edad: 21
+Correo: pablo@gmail.com
+Dni: 47469002S
+
+HOTEL:
+Nombre: Madrid Palace
+Estrellas: 5
+Ciudad: Londres
+
+IDA:
+Codigo: LM6
+Fecha Ida: 2021-04-28
+Fecha Vuelta: 2021-04-30
+Ciudad Salida: Madrid
+Ciudad Llegada: Londres
+
+VUELTA:
+Codigo: ML3
+Fecha Ida: 2021-04-21
+Fecha Vuelta: 2021-04-29
+Ciudad Salida: Londres
+Ciudad Llegada: Madrid
+
