@@ -83,6 +83,22 @@ public class Reserva {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder reserva = new StringBuilder();
+		reserva.append("USUARIO:\n");
+		reserva.append(usuario.toString());
+		reserva.append("\n");
+		if(!hotel.getName().equals("")) reserva.append("HOTEL:\n"); reserva.append(hotel.toString()); reserva.append("\n");
+		reserva.append("IDA:\n");
+		reserva.append(ida.toString());
+		reserva.append("\n");
+		reserva.append("VUELTA:\n");
+		reserva.append(vuelta.toString());
+		reserva.append("\n");
+		return reserva.toString();
+	}
 	
 	
 }

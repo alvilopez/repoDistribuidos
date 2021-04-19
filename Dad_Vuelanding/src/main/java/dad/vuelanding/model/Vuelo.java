@@ -99,6 +99,19 @@ public class Vuelo {
         this.id = id;
     }
 
+
+
+	@Override
+	public String toString() {
+		StringBuilder vuelo = new StringBuilder();
+		vuelo.append("Codigo: "+codigo+"\n");
+		vuelo.append("Fecha Ida: " +fechaSalida.toString()+"\n");
+		vuelo.append("Fecha Vuelta: " +fechaLlegada.toString()+"\n");
+		vuelo.append("Ciudad Salida: "+ aeropouertoSalida.getCiudad()+"\n");
+		vuelo.append("Ciudad Llegada: "+ aeropuertoLlegada.getCiudad()+"\n");
+		return vuelo.toString();
+	}
+
    
 
 }

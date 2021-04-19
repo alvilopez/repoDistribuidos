@@ -13,5 +13,6 @@ public interface aeropuertoRepository extends JpaRepository<Aeropuerto,Long> {
 	Aeropuerto findByCiudad(String nombre);
 	Aeropuerto findByNombre(String nombre);
 	ArrayList<Aeropuerto> findAllByOrderByNombre();
+	Boolean existsByCiudad(String nombre);
 	
 }

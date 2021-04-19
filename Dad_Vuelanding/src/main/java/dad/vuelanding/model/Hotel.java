@@ -73,6 +73,15 @@ public class Hotel {
 	public void setAeropuertoAux(String aeropuertoAux) {
 		this.aeropuertoAux = aeropuertoAux;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder hotel = new StringBuilder();
+		hotel.append("Nombre: "+name+"\n");
+		hotel.append("Estrellas: "+estrellas+"\n");
+		hotel.append("Ciudad: "+aeropuerto.getCiudad()+"\n");
+		return hotel.toString();
+	}
 	
 	
 	

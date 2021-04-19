@@ -134,6 +134,18 @@ public class Usuario {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder usuario = new StringBuilder();
+		usuario.append("Nombre: "+name+"\n");
+		usuario.append("Apellido: "+surname+"\n");
+		usuario.append("Edad: "+edad+"\n");
+		usuario.append("Correo: "+correo+"\n");
+		usuario.append("Dni: "+nif+"\n");
+		
+		return usuario.toString();
+	}
 	
 	
 	

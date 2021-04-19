@@ -1,5 +1,16 @@
 package dad.vuelanding.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.security.Principal;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -10,9 +21,11 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -20,10 +33,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+
 import dad.vuelanding.model.Aeropuerto;
+import dad.vuelanding.model.Billete;
 import dad.vuelanding.model.Hotel;
 import dad.vuelanding.model.Reserva;
 import dad.vuelanding.model.Usuario;
@@ -33,6 +55,7 @@ import dad.vuelanding.reposotories.hotelRepository;
 import dad.vuelanding.reposotories.reservaRepository;
 import dad.vuelanding.reposotories.usuarioRepository;
 import dad.vuelanding.reposotories.vueloRepository;
+
 
 @CrossOrigin
 @Controller
@@ -56,9 +79,9 @@ public class usuarioController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	@PostConstruct
+	/*@PostConstruct
 	public void Init() {
-		/*Aeropuerto ap1 = new Aeropuerto("Madrid", "BAR", "Barajas");
+		Aeropuerto ap1 = new Aeropuerto("Madrid", "BAR", "Barajas");
 		Aeropuerto ap2 = new Aeropuerto("Barcelona", "PRT", "El Prat");
 		Aeropuerto ap3 = new Aeropuerto("Londres","LON","Londres Airport");
 		Aeropuerto ap4 = new Aeropuerto("Paris","FRP","France Port");
@@ -86,10 +109,6 @@ public class usuarioController {
 		hotelRepository.save(h4);
 		hotelRepository.save(vacio);
 		
-		
-		Usuario us1 = new Usuario("Alvi", "Lopez Marcos", 21, "00000000L", "a@gmail.com", "1234");
-		usuarioRepository.save(us1);
-		
 		Vuelo vl1 = new Vuelo("ML1", ap1, ap3);
 		Vuelo vl2 = new Vuelo("ML2",ap1,ap3);
 		Vuelo vl3 = new Vuelo("LM3", ap3, ap1);
@@ -98,8 +117,8 @@ public class usuarioController {
 		vueloRepository.save(vl2);
 		vueloRepository.save(vl3);
 		vueloRepository.save(vl4);
-		*/
-	}
+		
+	}*/
 	
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -208,8 +227,9 @@ public class usuarioController {
 	@PostMapping("/buscarVuelo/ViajesEntreCiudades")
 	public String mostrarVuelosCiudades(String origen,String destino,Model viajesIdaModel, Model viajesVueltaModel ) {
 		System.out.println(origen+destino);
+		System.out.println(aeropuertoRepository.existsByCiudad(origen));
 		
-		if(ciudades.contains(origen)&&ciudades.contains(destino)) {
+		if(aeropuertoRepository.existsByCiudad(origen)&&aeropuertoRepository.existsByCiudad(destino)) {
 			Aeropuerto aeropuertoOrigen = aeropuertoRepository.findByCiudad(origen);
 			ArrayList<Vuelo> auxArray = vueloRepository.findByAeropouertoSalida(aeropuertoOrigen);
 			ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>();
@@ -237,17 +257,18 @@ public class usuarioController {
 	}
 	
 	@PostMapping("/reservar")
-	public String reservar(String codigoIda,String codigoVuelta, Model model) {
+	public String reservar(String codigoIda,String codigoVuelta, Model model,HttpServletRequest request) {
 		if (vueloRepository.findByCodigo(codigoIda) != null && vueloRepository.findByCodigo(codigoVuelta)!= null) {
 			Reserva reservaAux = new Reserva();
 			reservaAux.setIda(vueloRepository.findByCodigo(codigoIda));
 			reservaAux.setVuelta(vueloRepository.findByCodigo(codigoVuelta));
 			Hotel vacio = hotelRepository.findByName("");
 			reservaAux.setHotel(vacio);
-			Usuario aux = usuarioRepository.findByName(usuarioActual.getName());
+			Usuario aux = usuarioRepository.findByName(request.getRemoteUser());
 			reservaAux.setUsuario(aux);
 
 			reservaRepository.save(reservaAux);
+			model.addAttribute("reservaActual",reservaAux);
 			return "/vuelanding/reservar";
 		} else {
 			return "/vuelanding/errorReservar";
@@ -269,7 +290,7 @@ public class usuarioController {
 	public String mostrarVuelosCiudadesHotel(String origen,String destino,Model viajesIdaModel, Model viajesVueltaModel, Model hoteles ) {
 		System.out.println(origen+destino);
 		
-		if(ciudades.contains(origen)&&ciudades.contains(destino)) {
+		if(aeropuertoRepository.existsByCiudad(origen)&&aeropuertoRepository.existsByCiudad(destino)) {
 			Aeropuerto aeropuertoOrigen = aeropuertoRepository.findByCiudad(origen);
 			ArrayList<Vuelo> auxArray = vueloRepository.findByAeropouertoSalida(aeropuertoOrigen);
 			ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>();
@@ -299,17 +320,17 @@ public class usuarioController {
 	}
 	
 	@PostMapping("/reservar/ViajeHotel")
-	public String reservarViajeMasHotel(String codigoIda,String codigoVuelta,String hotel, Model model) {
+	public String reservarViajeMasHotel( Model model,String codigoIda,String codigoVuelta,String hotel,HttpServletRequest request) {
 		if (vueloRepository.findByCodigo(codigoIda) != null && vueloRepository.findByCodigo(codigoVuelta)!= null) {
 			reservaActual = new Reserva();
 			reservaActual.setIda(vueloRepository.findByCodigo(codigoIda));
 			reservaActual.setVuelta(vueloRepository.findByCodigo(codigoVuelta));
 			reservaActual.setHotel(hotelRepository.findByName(hotel));
-			Usuario aux = usuarioRepository.findByName(usuarioActual.getName());
+			Usuario aux = usuarioRepository.findByName(request.getRemoteUser());
 			reservaActual.setUsuario(aux);
 			
 			reservaRepository.save(reservaActual);
-			System.out.println(reservaActual.getUsuario());
+			model.addAttribute("reservaActual",reservaActual);
 			return "/vuelanding/reservar";
 		} else {
 			return "/vuelanding/errorReservar";
@@ -322,8 +343,9 @@ public class usuarioController {
 	//Fin Funciones Viaje Mas Hotel
 	
 	@GetMapping("/informacionPersonal")
-	public String informacionPersonal(Model model){
-		model.addAttribute("usuario", usuarioActual);
+	public String informacionPersonal(Model model,HttpServletRequest request){
+		Usuario usuario = usuarioRepository.findByName(request.getRemoteUser());
+		model.addAttribute("usuario", usuario);
 		return "vuelanding/informacionPersonal";
 	}
 
@@ -497,5 +519,69 @@ public class usuarioController {
 		
 		return "/vuelos/creado";
 	}
+	
+	
+	//Servicio Billete
+	@RequestMapping("/imprimirBillete")
+	public String imprimirBillete(Model model, String mensaje,Authentication auth) {
+		
+		Billete billete = new Billete(mensaje);
+		
+		
+			OkHttpClient client = new OkHttpClient();
+			MediaType mediaType = MediaType.parse("application/json");
+			RequestBody body = RequestBody.create(mediaType,"{/n/t Contenido:"+billete.getContenido());
+			Request request = new Request.Builder()
+					.url("http://127.0.0.1:4444/ServicioBillete/enviarInformacionPDF")
+					.post(body)
+					.addHeader("Content-Type", "application/json")
+					.addHeader("Cache-Control", "no-cache")
+					.addHeader("Postman-Token", "1fae90e0-8c7e-48dd-9abe-1e1fdfdfd2a8")
+					.build();
+			
+		try {
+			Response response = client.newCall(request).execute();
+		}catch (IOException e) {
+			// TODO: handle exception
+		}
+		
+		
+		return "/usuario/usuario";
+	}
+	
+	@RequestMapping("/imprimirBillete2/{id}")
+	public String imprimirBillete2(Model model,Authentication auth,@PathVariable long id) {
+		try {
+			Socket socket = new Socket("127.0.0.1",4444);
+			
+			PrintWriter escribirServer = new PrintWriter(socket.getOutputStream(),true);
+			Reserva billete = reservaRepository.findById(id).get();
+			String informacion = billete.toString();
+
+			escribirServer.print(informacion);
+			escribirServer.close();
+			socket.close();
+			
+			socket = new Socket("127.0.0.1",4444);
+			BufferedReader leerServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			String linea = leerServer.readLine();
+			model.addAttribute("url",linea);;
+			leerServer.close();
+			socket.close();
+		
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "/servicio/imprimir";
+	}
+	
+	
+	
+	
 
 }

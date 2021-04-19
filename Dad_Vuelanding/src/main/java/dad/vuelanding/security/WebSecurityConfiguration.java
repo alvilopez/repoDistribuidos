@@ -52,6 +52,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/reservar/ViajeHotel").hasAnyRole("USER","ADMIN");
 		http.authorizeRequests().antMatchers("/informacionPersonal").hasAnyRole("USER","ADMIN");
 		http.authorizeRequests().antMatchers("/informacionReservas").hasAnyRole("USER","ADMIN");
+		http.authorizeRequests().antMatchers("/imprimirBillete").hasAnyRole("USER","ADMIN");
+		http.authorizeRequests().antMatchers("/ServicioBillete/enviarInformacionPDF").hasAnyRole("USER","ADMIN");
+		
 		
 		http.authorizeRequests().antMatchers("/aeropuerto/anadir").hasAnyRole("ADMIN");
 		//http.authorizeRequests().antMatchers("/aeropuerto/crear").hasAnyRole("ADMIN","USER");
@@ -65,6 +68,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/vuelo").hasAnyRole("ADMIN");
 		http.authorizeRequests().antMatchers("/vuelo/anadir").hasAnyRole("ADMIN");
 		http.authorizeRequests().antMatchers("/vuelo/crear").hasAnyRole("ADMIN");
+		
 		
 		// Login form
 		http.formLogin().loginPage("/usuario");
