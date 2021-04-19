@@ -85,7 +85,9 @@
 ![ErrorDatos](https://user-images.githubusercontent.com/34128078/111206271-72265400-85c8-11eb-818d-b427944c9816.PNG)
 #### Plantilla con con notificación de que los datos son erroneos.
 #### ------------------------------------------------------------------------------------------------------------------
-
+![ImprimirBillete](https://user-images.githubusercontent.com/78815899/115295922-98f12080-a15a-11eb-9024-e7fd3bd8db94.PNG)
+#### Plantilla que permite ver un pdf con la informacion de la reserva.
+#### ------------------------------------------------------------------------------------------------------------------
 
 ## Diagrama de Navegacion
 ![DiagramaNavegacion](https://user-images.githubusercontent.com/78815899/110356766-e1390100-803a-11eb-8a66-4b61e7a4d6e8.PNG)
