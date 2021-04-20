@@ -1,3 +1,4 @@
+
 # Nombre de la Aplicacion: (Compañia de Viajes)
 
 ## Tematica: Publica: Consultar precios de viajes, hotel, ocio. Las fechas disponibles, comparar precios. Privada: imprimir recibos, efectuar reservar, modificar datos usuario o reserva.**
@@ -92,8 +93,7 @@
 ## Diagrama de Navegacion
 ![DiagramaNavegacion](https://user-images.githubusercontent.com/78815899/110356766-e1390100-803a-11eb-8a66-4b61e7a4d6e8.PNG)
 ## Diagrama UML
-![DiagrramaUML](https://user-images.githubusercontent.com/78815899/110356792-e6964b80-803a-11eb-80b8-15d48a7f7091.PNG)
-
+![Diagrama de clases](https://user-images.githubusercontent.com/34128078/115391967-570abd80-a1e0-11eb-9dc6-3edc4ef079f5.PNG)
 
 
 
