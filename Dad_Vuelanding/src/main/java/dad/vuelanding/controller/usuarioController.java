@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.security.Principal;
 import java.security.SecureRandom;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
@@ -110,9 +111,17 @@ public class usuarioController {
 		hotelRepository.save(vacio);
 		
 		Vuelo vl1 = new Vuelo("ML1", ap1, ap3);
+		vl1.setFechaSalida(Date.valueOf("2021-05-08"));
+		vl1.setFechaLlegada(Date.valueOf("2021-05-08"));
 		Vuelo vl2 = new Vuelo("ML2",ap1,ap3);
+		vl2.setFechaSalida(Date.valueOf("2021-05-09"));
+		vl2.setFechaLlegada(Date.valueOf("2021-05-08"));
 		Vuelo vl3 = new Vuelo("LM3", ap3, ap1);
+		vl3.setFechaSalida(Date.valueOf("2021-05-10"));
+		vl3.setFechaLlegada(Date.valueOf("2021-05-08"));
 		Vuelo vl4 = new Vuelo("LM4",ap3,ap1);
+		vl4.setFechaSalida(Date.valueOf("2021-05-11"));
+		vl4.setFechaLlegada(Date.valueOf("2021-05-08"));
 		vueloRepository.save(vl1);
 		vueloRepository.save(vl2);
 		vueloRepository.save(vl3);
@@ -149,23 +158,23 @@ public class usuarioController {
 	//Inicion Funciones Controlador Iniciar Sesion
 	@GetMapping("/usuario")
 	public String usuario(){
-		return "usuario/usuario";
+		return "Usuario/usuario";
 	}
 
 	@GetMapping("/errorUsuario")
 	public String errorUsuario(){
-		return "usuario/errorUsuario";
+		return "Usuario/errorUsuario";
 	}
 
 	@GetMapping("/confirmacionRegistro")
 	public String confirmacionRegistro(){
-		return "usuario/confirmacionRegistro";
+		return "Usuario/confirmacionRegistro";
 	}
 	
 	@PostMapping("/usuario/nuevo")
 	public String nuevoUsuario (Model model, Usuario aux, HttpServletRequest request) {
 		System.out.println(aux.getName());
-		return "usuario/usuario";
+		return "Usuario/usuario";
 	}
 	
 	@GetMapping("/saluda")
@@ -177,7 +186,7 @@ public class usuarioController {
 	
 	@GetMapping("/nuevousuario")
 	public String nuevoUsuario(){
-		return "usuario/nuevousuario";
+		return "Usuario/nuevousuario";
 	}
 	
 	@PostMapping("/usuario/crearUsuario")
@@ -188,22 +197,22 @@ public class usuarioController {
 		aux.setRoles(rolUsuario);
 		aux.encodePassword();
 		usuarioRepository.save(aux);
-		return "usuario/confirmacionRegistro";
+		return "Usuario/confirmacionRegistro";
 	}
 	
 	@PostMapping("usuario/login")
 	public String loginUsuario(Model model, Usuario aux){
 		
 		if (aux==null){
-			return "usuario/errorUsuario";
+			return "Usuario/errorUsuario";
 		}
 	
 		Usuario test = usuarioRepository.findByName(aux.getName());
 		if (test != null && passwordEncoder.matches(aux.getPassword(),test.getPassword())){
 			usuarioActual = test;
-			return "vuelanding/pagina";
+			return "Vuelanding/pagina";
 		}else{
-			return "usuario/errorUsuario";
+			return "Usuario/errorUsuario";
 		}
 	}
 	//Fin Funciones Controlador Inicar Sesion
@@ -211,7 +220,7 @@ public class usuarioController {
 	//Inicio Funciones Controlador Aplicacion
 	@GetMapping("/pagina")
 	public String iniciarAplicacion(){
-		return "vuelanding/pagina";
+		return "Vuelanding/pagina";
 	}
 	
 	@GetMapping("/buscarVuelo")
@@ -220,7 +229,7 @@ public class usuarioController {
 		System.out.println(aeropuertos.size());
 		model.addAttribute("aeropuertos",aeropuertos);
 		
-		return "vuelanding/buscarVuelo";
+		return "Vuelanding/buscarVuelo";
 	}
 	
 	//-----------------------------------------------------------------------------------
@@ -250,10 +259,10 @@ public class usuarioController {
 			System.out.println(vuelos2.size());
 			viajesVueltaModel.addAttribute("vuelos2",vuelos2);
 			
-			return "/vuelanding/buscarVueloAux";
+			return "/Vuelanding/buscarVueloAux";
  		}
 		
-		return "vuelanding/errorReservar";
+		return "Vuelanding/errorReservar";
 	}
 	
 	@PostMapping("/reservar")
@@ -269,9 +278,9 @@ public class usuarioController {
 
 			reservaRepository.save(reservaAux);
 			model.addAttribute("reservaActual",reservaAux);
-			return "/vuelanding/reservar";
+			return "/Vuelanding/reservar";
 		} else {
-			return "/vuelanding/errorReservar";
+			return "/Vuelanding/errorReservar";
 		}
 	}
 	
@@ -283,7 +292,7 @@ public class usuarioController {
 	public String buscarVueloHotel(Model model){
 		ArrayList<Aeropuerto> aeropuertos = aeropuertoRepository.findAllByOrderByNombre();
 		model.addAttribute("aeropuertos",aeropuertos);
-		return "vuelanding/buscarVueloHotel";
+		return "Vuelanding/buscarVueloHotel";
 	}
 	
 	@PostMapping("/buscarVuelo/ViajesEntreCiudades/ViajeHotel")
@@ -313,10 +322,10 @@ public class usuarioController {
 			hotelesL = hotelRepository.findByAeropuerto(aeropuertoVuelta);
 			hoteles.addAttribute("hoteles",hotelesL);
 			
-			return "/vuelanding/buscarVueloHotelAux";
+			return "/Vuelanding/buscarVueloHotelAux";
  		}
 		
-		return "vuelanding/errorReservar";
+		return "Vuelanding/errorReservar";
 	}
 	
 	@PostMapping("/reservar/ViajeHotel")
@@ -331,9 +340,9 @@ public class usuarioController {
 			
 			reservaRepository.save(reservaActual);
 			model.addAttribute("reservaActual",reservaActual);
-			return "/vuelanding/reservar";
+			return "/Vuelanding/reservar";
 		} else {
-			return "/vuelanding/errorReservar";
+			return "/Vuelanding/errorReservar";
 		}
 	}
 	
@@ -346,7 +355,7 @@ public class usuarioController {
 	public String informacionPersonal(Model model,HttpServletRequest request){
 		Usuario usuario = usuarioRepository.findByName(request.getRemoteUser());
 		model.addAttribute("usuario", usuario);
-		return "vuelanding/informacionPersonal";
+		return "Vuelanding/informacionPersonal";
 	}
 
 	@GetMapping("/informacionReservas")
@@ -355,7 +364,7 @@ public class usuarioController {
 		Usuario aux = usuarioRepository.findByName(usuarioActual.getName());
 		reservas = (reservaRepository.findByUsuario(aux));
 		model.addAttribute("reservas", reservas);
-		return "vuelanding/informacionReserva";
+		return "Vuelanding/informacionReserva";
 	}
 
 	//Fin Funciones Controlador Aplicacion
@@ -374,12 +383,12 @@ public class usuarioController {
 			// TODO: handle exception
 		}*/
 		
-		return "aeropuertos/aeropuertos";
+		return "Aeropuertos/aeropuertos";
 	}
 	
 	@GetMapping("/aeropuerto/anadir")
 	public String aeropuertoDatos() {
-		return "aeropuertos/datosAeropuertos";
+		return "Aeropuertos/datosAeropuertos";
 	}
 	
 	@PostMapping("/aeropuerto/crear")
@@ -390,14 +399,14 @@ public class usuarioController {
 		}
 		aeropuertoRepository.save(aeropuertos);
 		ciudades.add(aeropuertos.getCiudad());
-		return "/aeropuertos/creado";
+		return "/Aeropuertos/creado";
 	}
 	
 	@GetMapping("aeropuerto/eliminar")
 	public String aeropuertoEliminar(Model model) {
 		
 		model.addAttribute("aeropuertos", aeropuertoRepository.findAllByOrderByNombre());
-		return "aeropuertos/datosEliminarAeropuerto";
+		return "Aeropuertos/datosEliminarAeropuerto";
 	}
 	
 	@PostMapping("/aeropuerto/eliminar/datos")
@@ -425,21 +434,21 @@ public class usuarioController {
 		if (!vuelosEliminarVuelta.isEmpty()) for(Vuelo v:vuelosEliminarVuelta) vueloRepository.delete(v);
 		
 		aeropuertoRepository.delete(aux);
-		return "aeropuertos/eliminado";
+		return "Aeropuertos/eliminado";
 	}
 	
 	//Hoteles
 	
 	@GetMapping("/hotel")
 	public String hotel() {
-		return "hoteles/hotel";
+		return "Hoteles/hotel";
 	}
 	
 	@GetMapping("/hotel/anadir")
 	public String hotelDatos(Model model) {
 		ArrayList<Aeropuerto> auxL = aeropuertoRepository.findAllByOrderByNombre();
 		model.addAttribute("aeropuertos", auxL);
-		return "hoteles/datosHotel";
+		return "Hoteles/datosHotel";
 	}
 	
 	@PostMapping("/hotel/crear")
@@ -451,14 +460,14 @@ public class usuarioController {
 		Aeropuerto auxAeropuerto2 = aeropuertoRepository.findByCiudad(hotel.getAeropuertoAux());
 		hotel.setAeropuerto(auxAeropuerto2);
 		hotelRepository.save(hotel);
-		return "/hoteles/creadoH";
+		return "/Hoteles/creadoH";
 	}
 	
 	@GetMapping("hotel/eliminar")
 	public String hotelEliminar(Model model) {
 		
 		model.addAttribute("hoteles", hotelRepository.findAllByOrderByName());
-		return "hoteles/datosHotelEliminar";
+		return "Hoteles/datosHotelEliminar";
 	}
 	
 	@PostMapping("/hotel/eliminar/datos")
@@ -474,7 +483,7 @@ public class usuarioController {
 		if(!reservasEliminar.isEmpty())for(Reserva r:reservasEliminar)reservaRepository.delete(r);
 		
 		hotelRepository.delete(aux);
-		return "hoteles/eliminadoH";
+		return "Hoteles/eliminadoH";
 	}
 	//Fin Funcoines añadir informacion a la base de datos
 	
@@ -485,14 +494,14 @@ public class usuarioController {
 	// Funciones control de vuelos
 	@GetMapping("/vuelo")
 	public String vuelo() {
-		return "vuelos/vuelos";
+		return "Vuelos/vuelos";
 	}
 
 	@GetMapping("/vuelo/anadir")
 	public String vueloDatos(Model model) {
 		ArrayList<Aeropuerto> auxL = aeropuertoRepository.findAllByOrderByNombre();
 		model.addAttribute("aeropuertos", auxL);
-		return "vuelos/datosVuelos";
+		return "Vuelos/datosVuelos";
 	}
 	
 	@PostMapping("/vuelo/crear")
@@ -517,37 +526,12 @@ public class usuarioController {
 
 		vueloRepository.save(vuelo);
 		
-		return "/vuelos/creado";
+		return "/Vuelos/creado";
 	}
 	
 	
-	//Servicio Billete
-	@RequestMapping("/imprimirBillete")
-	public String imprimirBillete(Model model, String mensaje,Authentication auth) {
-		
-		Billete billete = new Billete(mensaje);
-		
-		
-			OkHttpClient client = new OkHttpClient();
-			MediaType mediaType = MediaType.parse("application/json");
-			RequestBody body = RequestBody.create(mediaType,"{/n/t Contenido:"+billete.getContenido());
-			Request request = new Request.Builder()
-					.url("http://127.0.0.1:4444/ServicioBillete/enviarInformacionPDF")
-					.post(body)
-					.addHeader("Content-Type", "application/json")
-					.addHeader("Cache-Control", "no-cache")
-					.addHeader("Postman-Token", "1fae90e0-8c7e-48dd-9abe-1e1fdfdfd2a8")
-					.build();
-			
-		try {
-			Response response = client.newCall(request).execute();
-		}catch (IOException e) {
-			// TODO: handle exception
-		}
-		
-		
-		return "/usuario/usuario";
-	}
+	
+	
 	
 	@RequestMapping("/imprimirBillete2/{id}")
 	public String imprimirBillete2(Model model,Authentication auth,@PathVariable long id) {
