@@ -95,5 +95,16 @@
 ## Diagrama UML
 ![Diagrama de clases](https://user-images.githubusercontent.com/34128078/115391967-570abd80-a1e0-11eb-9dc6-3edc4ef079f5.PNG)
 
+## Pasos a seguir para la virtualización
+#### 1. Descargar e instalar Virtual Box y Vagrant, en esta última ejecutaremos la máquina virtual, en nuestro caso, Ubuntu,
+mediante Vagrant init.
+#### 2. Añadir a la configuración, en el archivo VagranFile, generado al instalar el S.O. la línea:
+config.vm.network "forwarded_port", guest: 8443, host: 8443, host_ip: "127.0.0.1".
+#### 3. Arrancar la máquina virtual mediante el comando: vagrant up.
+#### 4. Conectarse a la máquina virtual mediante protocolo ssh mediante el comando: vagrant ssh.
+#### 5. Instalar java 11, ya que es el que hemos utilizado para la cración de la aplicación.
+#### 6. Instalar sql-server en la máquina virtual usando la misma contraseña que usamos en el workbench.
+#### 7. Crear una conexión a la base de datos de tipo TCP/IP over SSH. El usuario ssh será "vagrant" y el path del Key File podemos encontrarlo en el resultado de ejecutar el comando en la ubicación donde fue instalada la máquina vagrant.
+#### 8. Generaremos el Jar, ya sea en Eclipse: Run As-> Maven Build... (escribiendo en goals "packages")
 
 
