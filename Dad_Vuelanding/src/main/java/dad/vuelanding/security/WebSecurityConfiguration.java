@@ -39,8 +39,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/nuevousuario").permitAll();
 		http.authorizeRequests().antMatchers("/errorUsuario").permitAll();
 		http.authorizeRequests().antMatchers("/confirmacionRegistro").permitAll();
-		http.authorizeRequests().antMatchers("usuario/crearUsuario").permitAll();
-		http.authorizeRequests().antMatchers("usuario/login").permitAll();
+		http.authorizeRequests().antMatchers("/usuario/crearUsuario").permitAll();
+		http.authorizeRequests().antMatchers("/usuario/login").permitAll();
 		http.authorizeRequests().antMatchers("/aeropuerto/crear").permitAll();
 		
 		// Private pages

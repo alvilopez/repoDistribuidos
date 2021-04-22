@@ -259,7 +259,7 @@ public class usuarioController {
 			System.out.println(vuelos2.size());
 			viajesVueltaModel.addAttribute("vuelos2",vuelos2);
 			
-			return "/Vuelanding/buscarVueloAux";
+			return "Vuelanding/buscarVueloAux";
  		}
 		
 		return "Vuelanding/errorReservar";
@@ -273,14 +273,14 @@ public class usuarioController {
 			reservaAux.setVuelta(vueloRepository.findByCodigo(codigoVuelta));
 			Hotel vacio = hotelRepository.findByName("");
 			reservaAux.setHotel(vacio);
-			Usuario aux = usuarioRepository.findByName(request.getRemoteUser());
-			reservaAux.setUsuario(aux);
+			Usuario usuario = usuarioRepository.findByName(request.getRemoteUser());
+			reservaAux.setUsuario(usuario);
 
 			reservaRepository.save(reservaAux);
 			model.addAttribute("reservaActual",reservaAux);
-			return "/Vuelanding/reservar";
+			return "Vuelanding/reservar";
 		} else {
-			return "/Vuelanding/errorReservar";
+			return "Vuelanding/errorReservar";
 		}
 	}
 	
@@ -322,7 +322,7 @@ public class usuarioController {
 			hotelesL = hotelRepository.findByAeropuerto(aeropuertoVuelta);
 			hoteles.addAttribute("hoteles",hotelesL);
 			
-			return "/Vuelanding/buscarVueloHotelAux";
+			return "Vuelanding/buscarVueloHotelAux";
  		}
 		
 		return "Vuelanding/errorReservar";
@@ -340,9 +340,9 @@ public class usuarioController {
 			
 			reservaRepository.save(reservaActual);
 			model.addAttribute("reservaActual",reservaActual);
-			return "/Vuelanding/reservar";
+			return "Vuelanding/reservar";
 		} else {
-			return "/Vuelanding/errorReservar";
+			return "Vuelanding/errorReservar";
 		}
 	}
 	
@@ -359,10 +359,10 @@ public class usuarioController {
 	}
 
 	@GetMapping("/informacionReservas")
-	public String informacionReservas(Model model){
+	public String informacionReservas(Model model, HttpServletRequest request){
 		ArrayList<Reserva> reservas = new ArrayList<>();
-		Usuario aux = usuarioRepository.findByName(usuarioActual.getName());
-		reservas = (reservaRepository.findByUsuario(aux));
+		Usuario usuario = usuarioRepository.findByName(request.getRemoteUser());
+		reservas = (reservaRepository.findByUsuario(usuario));
 		model.addAttribute("reservas", reservas);
 		return "Vuelanding/informacionReserva";
 	}
@@ -399,7 +399,7 @@ public class usuarioController {
 		}
 		aeropuertoRepository.save(aeropuertos);
 		ciudades.add(aeropuertos.getCiudad());
-		return "/Aeropuertos/creado";
+		return "Aeropuertos/creado";
 	}
 	
 	@GetMapping("aeropuerto/eliminar")
@@ -460,7 +460,7 @@ public class usuarioController {
 		Aeropuerto auxAeropuerto2 = aeropuertoRepository.findByCiudad(hotel.getAeropuertoAux());
 		hotel.setAeropuerto(auxAeropuerto2);
 		hotelRepository.save(hotel);
-		return "/Hoteles/creadoH";
+		return "Hoteles/creadoH";
 	}
 	
 	@GetMapping("hotel/eliminar")
@@ -526,7 +526,7 @@ public class usuarioController {
 
 		vueloRepository.save(vuelo);
 		
-		return "/Vuelos/creado";
+		return "Vuelos/creado";
 	}
 	
 	
@@ -561,7 +561,7 @@ public class usuarioController {
 			e.printStackTrace();
 		}
 		
-		return "/servicio/imprimir";
+		return "servicio/imprimir";
 	}
 	
 	
