@@ -56,6 +56,8 @@ public class ServerBillete {
 				PrintWriter escribirServer = new PrintWriter(socket.getOutputStream(),true);
 				File file = new File("Billete.pdf");
 				escribirServer.print(file.toURL());
+				//escribirServer.print(file.toPATH());
+				//escribirServer.print(file.toURI());
 				escribirServer.close();
 				socket.close();
 			}
