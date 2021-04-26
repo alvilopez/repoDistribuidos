@@ -549,7 +549,8 @@ public class usuarioController {
 			socket = new Socket("127.0.0.1",4444);
 			BufferedReader leerServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String linea = leerServer.readLine();
-			model.addAttribute("url",linea);;
+			String disco = "D:\\HashiCorp\\Vagrant\\bin\\" + linea; 
+			model.addAttribute("url",disco);;
 			leerServer.close();
 			socket.close();
 		
