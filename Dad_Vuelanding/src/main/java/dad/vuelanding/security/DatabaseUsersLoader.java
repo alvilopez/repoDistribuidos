@@ -1,7 +1,7 @@
 
 //Usar cada vez que se dropea el esquema en mySql
 
-/*package dad.vuelanding.security;
+package dad.vuelanding.security;
 
 import javax.annotation.PostConstruct;
 
@@ -27,4 +27,4 @@ public class DatabaseUsersLoader {
     	userRepository.save(new Usuario("user", passwordEncoder.encode("pass"), "USER"));
 		userRepository.save(new Usuario("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
     }
-}*/
+}

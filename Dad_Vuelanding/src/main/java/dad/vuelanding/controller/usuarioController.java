@@ -38,13 +38,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
-
 import dad.vuelanding.model.Aeropuerto;
 import dad.vuelanding.model.Billete;
 import dad.vuelanding.model.Hotel;
@@ -80,7 +73,7 @@ public class usuarioController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	/*@PostConstruct
+	@PostConstruct
 	public void Init() {
 		Aeropuerto ap1 = new Aeropuerto("Madrid", "BAR", "Barajas");
 		Aeropuerto ap2 = new Aeropuerto("Barcelona", "PRT", "El Prat");
@@ -127,7 +120,7 @@ public class usuarioController {
 		vueloRepository.save(vl3);
 		vueloRepository.save(vl4);
 		
-	}*/
+	}
 	
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -536,7 +529,7 @@ public class usuarioController {
 	@RequestMapping("/imprimirBillete2/{id}")
 	public String imprimirBillete2(Model model,Authentication auth,@PathVariable long id) {
 		try {
-			Socket socket = new Socket("127.0.0.1",4444);
+			Socket socket = new Socket("server",4444);
 			
 			PrintWriter escribirServer = new PrintWriter(socket.getOutputStream(),true);
 			Reserva billete = reservaRepository.findById(id).get();
@@ -546,7 +539,7 @@ public class usuarioController {
 			escribirServer.close();
 			socket.close();
 			
-			socket = new Socket("127.0.0.1",4444);
+			socket = new Socket("server",4444);
 			BufferedReader leerServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String linea = leerServer.readLine();
 			String disco = "D:\\HashiCorp\\Vagrant\\bin\\" + linea; 

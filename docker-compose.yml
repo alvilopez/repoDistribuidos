@@ -1,0 +1,67 @@
+version: '2'
+services:
+    vuelanding:
+        container_name: vuelanding
+        build:
+            context: ./Dad_Vuelanding
+            dockerfile: Dockerfile
+        ports:
+            - "8443:8443"
+        volumes:
+            - .:/todo
+        networks:
+            - puente
+    vuelanding2:
+        container_name: vuelanding2
+        build:
+            context: ./Dad_Vuelanding2
+            dockerfile: Dockerfile
+        ports:
+            - "8444:8444"
+        volumes:
+            - .:/todo
+        networks:
+            - puente
+    mysql-vuelanding:
+        container_name: mysql-vuelanding
+        image: mysql:5.6
+        restart: always
+        networks:
+            - puente
+        environment:
+            MYSQL_ROOT_PASSWORD: AnaBel19
+            MYSQL_DATABASE: bd_vuelanding
+        volumes:
+            - db-data:/var/lib/mysql
+        ports:
+            - "3307:3306"
+    serviciointerno:
+        container_name: serviciointerno
+        build:
+            context: ./ServiciosBillete
+            dockerfile: Dockerfile
+        networks:
+            puente:
+                aliases:
+                    - "server"    
+    loadbalancer:
+        image: haproxy:1.9.6
+        ports:
+        - '80:80'
+        - '443:443'
+        - '2020:2020'
+        volumes:
+            - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+            - ./haproxy/vuelanding.io.pem:/etc/ssl/certs/vuelanding.io/vuelanding.io.pem:ro
+        networks:
+            - puente
+        restart: unless-stopped
+        
+volumes:
+    db-data:
+networks:
+    puente:
+        driver: bridge
+                   
+                   
+                   
