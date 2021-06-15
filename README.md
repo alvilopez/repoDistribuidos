@@ -107,4 +107,7 @@ config.vm.network "forwarded_port", guest: 8443, host: 8443, host_ip: "127.0.0.1
 #### 7. Crear una conexión a la base de datos de tipo TCP/IP over SSH. El usuario ssh será "vagrant" y el path del Key File podemos encontrarlo en el resultado de ejecutar el comando en la ubicación donde fue instalada la máquina vagrant.
 #### 8. Generaremos el Jar, ya sea en Eclipse: Run As-> Maven Build... (escribiendo en goals "packages")
 
+## Balanceador de carga mediante SSL-PassThrough
+El balanceador de carga utilizado se ejecuta de manera que el usuario se conecta mediante ssl a la propia aplicacion, es decir que el certificado https es propio de la aplicación y no del balanceador de carga. Dicho balanceador de carga se ejecuta en el puerto 443 de nuestro servidor local. A su vez, este comprueba si las dos instancias de la aplicacion web alojadas en diferentes contenedores están disponibles. En el caso de no poder establecer conexión con alguno de dichos contenedores, se redirige a otro dispobible mediante el método RoundRobin.
+
 
