@@ -114,4 +114,5 @@ El balanceador de carga utilizado se ejecuta de manera que el usuario se conecta
 ![DadDockerCompose](https://user-images.githubusercontent.com/78815899/122450709-9c145b80-cfa7-11eb-9803-9b808b8592ff.PNG)
 
 ##Enlace Video Youtube:
+ 
 https://youtu.be/jbZdDx-tRQk
