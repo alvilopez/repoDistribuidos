@@ -1,0 +1,20 @@
+<html>
+	{{>footer}}
+	<body>
+		<p> Ciudades Disponibles: </p>
+		{{#aeropuertos}}
+			<li>{{ciudad}}</li>
+		{{/aeropuertos}}
+		<br> Introducir Datos Aeropuerto </br>
+		<form action="/hotel/crear" method="post">
+		<p>Ciudad del Hotel: (Madrid)</p>	
+		<input type='text' name='aeropuertoAux'/>
+		<p>Nombre del Hotel: (Bar)</p>	
+		<input type='text' name='name'/>
+		<p>Estrellas del Aeropuerto: (Barajas)</p>	
+		<input type='text' name='estrellas'/>
+		<input type="hidden" name="_csrf" value="{{token}}"/>
+		<br><input type='submit' value='Crear'/></br>
+		</form>
+	</body>
+</html>

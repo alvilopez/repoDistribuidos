@@ -1,0 +1,24 @@
+<html>
+	{{>footer}}
+	<body>
+		<p> Ciudades Disponibles: </p>
+		{{#aeropuertos}}
+			<li>{{ciudad}}</li>
+		{{/aeropuertos}}
+		<br> Introducir Datos Vuelo </br>
+		<form action="/vuelo/crear" method="post">
+		<p>Código del vuelo: </p>	
+		<input type='text' name='codigo'/>
+		<p>Fecha de Salida del vuelo: (Bar)</p>	
+		<input type='date' name='fechaSalida'/>
+        <p>Fecha de Salida del vuelo: </p>	
+		<input type='date' name='fechaLlegada'/>
+		<p>Nombre del Aeropuerto de Salida:</p>	
+		<input type='text' name='aeropuertoSalida'/>
+        <p>Nombre del Aeropuerto de Llegada:</p>	
+		<input type='text' name='aeropuertoLlegada'/>
+		<input type="hidden" name="_csrf" value="{{token}}"/>
+		<br><input type='submit' value='Crear'/></br>
+		</form>
+	</body>
+</html>

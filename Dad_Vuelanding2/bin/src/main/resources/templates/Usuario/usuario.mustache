@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<h1> Bienvenido a Vuelanding</h1>
+		<form action="usuario" method="post">
+		<p>Usuario: </p>	
+		<input type='text' name='name'/>
+		<p>Contraseña:</p>
+		<input type='text' name='password'/>
+		<input type="hidden" name="_csrf" value="{{token}}"/>
+		<input type='submit' value='Entrar'/>
+		<a href="nuevousuario">Crear Usuario</a>
+	</form>
+	</body>
+</html>

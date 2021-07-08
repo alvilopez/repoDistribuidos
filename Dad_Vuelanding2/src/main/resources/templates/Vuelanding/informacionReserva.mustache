@@ -1,0 +1,13 @@
+<html>
+	{{>footer}}
+	<body>
+		<p> Información del Usuario: </p>
+            {{#reservas}}
+            <li>{{-index}}</li>
+			<li> Vuelo de Ida ->  Cod: {{ida.codigo}}   Aeropuerto de salida: {{ida.aeropouertoSalida.ciudad}}   Aeropuerto de llegada: {{ida.aeropuertoLlegada.ciudad}} </li>
+			<li> Vuelo de Vuelta ->  Cod: {{vuelta.codigo}}   Aeropuerto de salida: {{vuelta.aeropouertoSalida.ciudad}}   Aeropuerto de llegada: {{vuelta.aeropuertoLlegada.ciudad}} </li>
+			<li> Hotel -> Nombre: {{hotel.name}}   Estrellas:{{hotel.estrellas}}  </li>
+            {{/reservas}}
+		</form>
+	</body>
+</html>

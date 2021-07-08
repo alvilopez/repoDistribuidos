@@ -1,0 +1,19 @@
+<html>
+	{{>footer}}
+	<body>
+		<p> Ciudades Disponibles: </p>
+		{{#aeropuertos}}
+			<li>{{ciudad}}</li>
+		{{/aeropuertos}}
+		
+		<br> Introduzca la ciudad de Origen y la ciudad de Destino <br>
+		<form action="/buscarVuelo/ViajesEntreCiudades" method="post">
+		<p>Origen: </p>	
+		<input type='text' name='origen'/>
+		<p>Destino:</p>
+		<input type='text' name='destino'/>
+		<input type="hidden" name="_csrf" value="{{token}}"/>
+		<br><input type='submit' value='Buscar'/></br>
+		</form>
+	</body>
+</html>

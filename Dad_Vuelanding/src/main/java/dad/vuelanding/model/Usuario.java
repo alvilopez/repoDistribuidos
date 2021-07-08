@@ -46,8 +46,12 @@ public class Usuario {
 		this.password = password;
 	}
 	
-	public Usuario(String name, String password, String... roles) {
+	public Usuario(String name, String surname, int edad, String nif, String correo, String password, String... roles) {
 		this.name = name;
+		this.surname = surname;
+		this.edad = edad;
+		this.nif = nif;
+		this.correo = correo;
 		this.password = password;
 		this.roles = List.of(roles);
 		//reserva = new ArrayList<>();
